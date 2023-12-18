@@ -1,0 +1,5 @@
+package fromUser;
+
+public enum UserType {
+	STUDENT,TEACHER,MANAGER,TECHSUPPORTSPECIALIST,ADMIN	
+}
