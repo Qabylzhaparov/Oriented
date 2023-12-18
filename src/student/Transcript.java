@@ -1,11 +1,10 @@
 package student;
 
 import java.sql.Array;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Transcript {
-    private ArrayList<Course> Course ;
-    private ArrayList<Mark> Mark;
+    private Map<Course, Mark> marksForCourses ;
     private String Code;
     private TraditionalGrade TraditionalGrade;
     private Semester Semester;
@@ -17,13 +16,12 @@ public class Transcript {
     	this.Code = Code;
     	this.TraditionalGrade = TraditionalGrade;
     	this.Semester = Semester;
-    	Course = new ArrayList<>();
-    	Mark = new ArrayList<>();
+    	marksForCourses = new HashMap<>();
     }
-    public ArrayList<student.Course> getCourse () {
-        return this.Course ;
+    public Map<Course, Mark> getCourseMarkMap () {
+        return marksForCourses;
     }
-    public void setCourse (ArrayList<Course> Course ) {
+    public void setCourseMarkMap (Map<Course, Mark> Course ) {
         this.Course  = Course ;
     }
     public ArrayList<Mark> getMark() {
