@@ -6,7 +6,7 @@ import fromUser.Message;
 import fromUser.User;
 ///heyy
 /// hey I'm heres
-
+/// lez go
 public class Employee extends User {
 	private Vector<Message> receiveMessages;         /// needs to get from DB(delete it)
     private double salary;
