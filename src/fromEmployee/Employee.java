@@ -12,6 +12,8 @@ public class Employee extends User {
     private double salary;
     private Date hireDate;
 	///dkdkdkdk
+    ///Are you hhere?
+    /// Yes
     /// empty constr
     
     /// constr with just name
