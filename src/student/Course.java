@@ -3,7 +3,7 @@ package student;
 
 import java.util.List;
 
-import manager.SchoolName;
+import manager.SchoolType;
 import teacher.Teacher;
 
 public class Course {
@@ -13,7 +13,7 @@ public class Course {
     
     private CourseType courseType;
     
-    private SchoolName school;
+    private SchoolType school;
         
     private Integer credits;
     
@@ -58,11 +58,11 @@ public class Course {
         this.courseType = courseType;
     }
 
-    public SchoolName getSchool() {
+    public SchoolType getSchool() {
         return school;
     }
 
-    public void setSchool(SchoolName school) {
+    public void setSchool(SchoolType school) {
         this.school = school;
     }
 

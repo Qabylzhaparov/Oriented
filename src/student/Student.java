@@ -28,7 +28,7 @@ public class Student extends User {
     
     private Integer yearOfStudy;
     
-    private SchoolName school;
+    private SchoolType school;
     
     private Teacher advisor;
     
@@ -112,13 +112,13 @@ public class Student extends User {
 
 
 
-	public SchoolName getSchool() {
+	public SchoolType getSchool() {
 		return school;
 	}
 
 
 
-	public void setSchool(SchoolName school) {
+	public void setSchool(SchoolType school) {
 		this.school = school;
 	}
 

@@ -1,5 +1,5 @@
 package manager;
 
-public enum SchoolName {
+public enum SchoolType {
 	 SITE, SG, BS, ISE, KMA, SAM, SCE
 }
