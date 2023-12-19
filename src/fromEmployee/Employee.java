@@ -11,7 +11,7 @@ public class Employee extends User {
 	private Vector<Message> receiveMessages;         /// needs to get from DB(delete it)
     private double salary;
     private Date hireDate;
-	
+	///dkdkdkdk
     /// empty constr
     
     /// constr with just name
