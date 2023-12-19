@@ -11,6 +11,7 @@ public class Message{
     private Date DateOfSend;
     private String Text;
     private User Author;
+    private int receiverid;
     private MessageType Category;
     private StatusType Status;
     private UrgencyLevel UrgencyLevel;     /// kishi arip
@@ -25,12 +26,13 @@ public class Message{
     
     /// constr with text, status, urgencyLevel(kak ya pokazal)
     
-    public Message(String text, User author, MessageType category,
+    public Message(String text, User author, int receiverid, MessageType category,
     		UrgencyLevel urgencyLevel) {
 		super();
 		DateOfSend = new Date();
 		Text = text;
 		Author = author;
+		receiverid = receiverid;
 		Category = category;
 		Status = status;
 		UrgencyLevel = urgencyLevel;
@@ -51,7 +53,17 @@ public class Message{
         this.ID = ID;
     }
 
-    public Date getDateOfSend() {
+    
+    
+    public int getReceiverId() {
+		return receiverid;
+	}
+
+	public void setReceiverId(int receiver) {
+		receiverid = receiver;
+	}
+
+	public Date getDateOfSend() {
         return this.DateOfSend;
     }
 

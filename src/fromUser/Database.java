@@ -10,13 +10,15 @@ import student.*;
 
 
 public class Database {
-    private Vector <Message> Messages;
+    private static Vector <Message> Messages;
     private static Map <Integer, Course> allcourses;   /// id, course
     private static Vector<Student> allstudents;
     private Vector <GraduateStudent> AllstudentMaster;
     private ArrayList<User> users;
     private static Set<ResearchPaper> researchPapers;	
     private Vector<News> news;
+    
+    private static Vector<String> strategicGoals;
     
     public Database() {
     	
@@ -62,10 +64,7 @@ public class Database {
 	public static Set<ResearchPaper> getResearchPapers() {
 		return researchPapers;
 	}
-	public static Vector<Message> getComplaints() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public static void addMessage(Message m) {
 		// TODO Auto-generated method stub
 		
@@ -73,6 +72,11 @@ public class Database {
 	public static void write() {
 		// TODO Auto-generated method stub
 		
+	}
+	/// Астындагынын бари меники
+	public static Vector<Message> getComplaints() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	public static Course getCourseAtID(Integer choice) {
 		return allcourses.get(choice-1);
@@ -88,4 +92,23 @@ public class Database {
 		}
 		return null;
 	}
+	public static int getReceiverId(int id) {
+		for(Message m: Messages) {
+			if(m.getReceiverId()==id) {
+				return m.getReceiverId();
+			}
+		}
+		return -1;
+	}
+	public static void addStrategicGoal(String goal) {
+		strategicGoals.add(goal);
+	}
+	public static void removeStrategicGoal(String goal) {
+		if(strategicGoals.contains(goal)) {
+			strategicGoals.remove(goal);
+	        System.out.println("Strategic goal '" + goal + "' removed");
+		} else System.out.println("No such goal");
+	}
+	
+	
 }
