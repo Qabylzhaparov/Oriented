@@ -32,10 +32,11 @@ public class Lesson {
     
    
 
-	public Lesson(Course course, Teacher teacher, String location, String time, WeekDay day) {
+	public Lesson(Course course, LessonType lessontype, Teacher teacher, String location, String time, WeekDay day) {
 		super();
 		this.setCourse(course);
 		this.lessonName = course.getCourseName();
+		this.lessonType = lessontype;
 		this.teacher = teacher;
 		this.location = location;
 		this.time = time;
@@ -107,7 +108,8 @@ public class Lesson {
 	}
 
 	public String toString() {
-		return getLessonName() + " " + getTeacher().getFirstName() + " " + getLocation();
+		return String.format("%-8s %-20s %-4s %-12s %-10s",
+	            getTime(), getLessonName(), getLessonType(), getTeacher().getFirstName(), getLocation());
 	}
 
 }    

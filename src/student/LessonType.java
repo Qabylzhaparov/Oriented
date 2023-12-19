@@ -1,5 +1,5 @@
 package student;
 
 public enum LessonType {
-	LECTURE, PRACTICE
+	L, P
 }
