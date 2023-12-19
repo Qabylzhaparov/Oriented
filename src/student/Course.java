@@ -7,40 +7,40 @@ import manager.SchoolName;
 import teacher.Teacher;
 
 public class Course {
-    private String courseCode;
-    
+	private static int courseId;
+	    
     private String courseName;
     
     private CourseType courseType;
     
     private SchoolName school;
-    
-    private String duration;
-    
+        
     private Integer credits;
     
     private List<Course> prerequisites;
-    
-    private String status;
-    
+        
     private List<Teacher> instructors;
+  
+    {
+    	courseId++;
+    }
     
-    private Integer capacity;
+    public Course() {
+    	courseName = null;
+    }
     
-    private Integer studentsCount;
+    public Course(String name) {
+    	this.courseName = name;
+    }
     
-    private Schedule schedule;
-    
-    private List<WeekDay> weekDays;
-
-
-    public String getCourseCode() {
-        return courseCode;
+    public Course(String name, Integer credits) {
+    	this.courseName = name;
+    	this.credits = credits;
     }
 
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
+    public int getCourseId() {
+		return courseId;
+	}
 
     public String getCourseName() {
         return courseName;
@@ -66,14 +66,6 @@ public class Course {
         this.school = school;
     }
 
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
     public Integer getCredits() {
         return credits;
     }
@@ -90,14 +82,6 @@ public class Course {
         this.prerequisites = prerequisites;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public List<Teacher> getInstructors() {
         return instructors;
     }
@@ -106,68 +90,8 @@ public class Course {
         this.instructors = instructors;
     }
 
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public Integer getStudentsCount() {
-        return studentsCount;
-    }
-
-    public void setStudentsCount(Integer studentsCount) {
-        this.studentsCount = studentsCount;
-    }
-
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
-
-    public List<WeekDay> getWeekDays() {
-        return weekDays;
-    }
-
-    public void setWeekDays(List<WeekDay> weekDays) {
-        this.weekDays = weekDays;
-    }
-
-
-    public String getEnrollmentStatus() {
-        return status;
-    }
-
-    public void addStudent() {
-        if (studentsCount < capacity) {
-            studentsCount++;
-            System.out.println("Student added to the course: " + courseName);
-        } else {
-            System.out.println("Course is at full capacity. Cannot add more students.");
-        }
-    }
-
-    public void dropStudent() {
-        if (studentsCount > 0) {
-            studentsCount--;
-            System.out.println("Student dropped from the course: " + courseName);
-        } else {
-            System.out.println("No students to drop from the course.");
-        }
-    }
-
-    public int countCredits() {
-        return credits;
-    }
-
-    public int countStudents() {
-        return studentsCount;
-        
+    public void addInstructor(Teacher teacher) {
+    	instructors.add(teacher);
     }
 }
 

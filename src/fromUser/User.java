@@ -2,6 +2,8 @@ package fromUser;
 
 import java.util.Objects;
 
+import manager.News;
+
 public class User implements Comparable<User>, Cloneable, UserInterface{
     private UserType UserType;
     private String ID;
@@ -10,9 +12,13 @@ public class User implements Comparable<User>, Cloneable, UserInterface{
     private String Email;
     private String Password;
     private int PhoneNumber;   /// kishi arip
-  iii
+  
     public User() {
     	
+    }
+    
+    public User(String name) {
+    	this.FirstName = name;
     }
     
     /// constructor with firstname, lastname
@@ -94,11 +100,10 @@ public class User implements Comparable<User>, Cloneable, UserInterface{
     	}
     }
     
-    public viewNews()
+    ///public viewNews()
 
-    public String commentNews(String comment) {
-        // Placeholder logic for commenting on news                         /// imenno kakoi news komentit'?
-        return "Comment: " + comment;                                       /// navernoe news.addComment(String comment)
+    public void commentNews(News news, String comment) {
+         news.addComment(comment);                                  /// navernoe news.addComment(String comment)
     }                                                                       /// a ne return comment
 
     @Override

@@ -3,27 +3,62 @@ package student;
 import java.util.Date;
 
 import fromUser.Language;
+import teacher.Teacher;
 
 public class Lesson {
-
+	private static Integer lessonId = 0;
+	
+	private Course course;
+	
     private String lessonName;
 
     private Teacher teacher;
 
     private LessonType lessonType;
-
-    private Language language;
     
     private String location;
     
-    private Date time;
+    private String time;
+        
+    private WeekDay day;
     
-    private Integer studentCount;
+    {
+    	lessonId++;
+    }
     
-    private WeekDay Day;
+    public Lesson() {
+    	
+    }
     
-    
-    public String getLessonName() {
+   
+
+	public Lesson(Course course, Teacher teacher, String location, String time, WeekDay day) {
+		super();
+		this.setCourse(course);
+		this.lessonName = course.getCourseName();
+		this.teacher = teacher;
+		this.location = location;
+		this.time = time;
+		this.day = day;
+	}
+
+	public Integer getLessonId() {
+		return lessonId;
+	}
+
+	public void setLessonId(Integer lessonId) {
+		Lesson.lessonId = lessonId;
+	}
+	
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+	public String getLessonName() {
 		return lessonName;
 	}
 
@@ -47,14 +82,6 @@ public class Lesson {
 		this.lessonType = lessonType;
 	}
 
-	public Language getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(Language language) {
-		this.language = language;
-	}
-
 	public String getLocation() {
 		return location;
 	}
@@ -63,39 +90,24 @@ public class Lesson {
 		this.location = location;
 	}
 
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
-	public Integer getStudentCount() {
-		return studentCount;
-	}
-
-	public void setStudentCount(Integer studentCount) {
-		this.studentCount = studentCount;
-	}
-
 	public WeekDay getDay() {
-		return Day;
+		return day;
 	}
 
 	public void setDay(WeekDay day) {
-		Day = day;
+		this.day = day;
 	}
 
-	void changeLocation(String newLocation) {
-        this.location = newLocation;
-    }
+	public String toString() {
+		return getLessonName() + " " + getTeacher().getFirstName() + " " + getLocation();
+	}
 
-    void changeTime(Date newTime) {
-        this.time = newTime;
-    }
-
-    void operation() {
-        System.out.println("Lesson operation performed.");
-    }
 }    

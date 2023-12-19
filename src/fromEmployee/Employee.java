@@ -12,8 +12,13 @@ public class Employee extends User {
     private double salary;
     private Date hireDate;
 	
-    /// empty constr
+    public Employee() {
+    	super();
+    }
     
+    public Employee(String name) {
+    	super(name);
+    }
     /// constr with just name
     
     public Employee(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
@@ -48,10 +53,10 @@ public class Employee extends User {
     
 }
 
-
-Employee
-1 send
-enter content
-urgency
-open/close
-Employee.SendMessage(new Message(content, open, high))
+//
+//Employee
+//1 send
+//enter content
+//urgency
+//open/close
+//Employee.SendMessage(new Message(content, open, high))

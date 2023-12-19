@@ -11,12 +11,11 @@ import student.Schedule;
 
 public class Teacher extends Employee {
     
-	public Teacher(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
-			String Password, int PhoneNumber, double salary, Date hireDate) {
-		super(UserType, ID, FirstName, LastName, Email, Password, PhoneNumber, salary, hireDate);
-		// TODO Auto-generated constructor stub
+	public Teacher(String name) {
+		super();
+		super.setFirstName(name);
 	}
-
+	
 	private List<Course> courses;
     
 	private SchoolName section;
@@ -86,4 +85,5 @@ public class Teacher extends Employee {
     public void checkAttendance(Course course) {
         System.out.println("Checking attendance for course: " + course.courseName);
     }
+    
 }  

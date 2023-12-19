@@ -3,6 +3,7 @@ package manager;
 import java.util.*;
 
 import fromEmployee.Employee;
+import research.ResearchPaper;
 import student.*;
 import teacher.Teacher;
 
@@ -11,7 +12,13 @@ import teacher.Teacher;
         /// emp cons
         
         /// cons with just name
+
         
+    	
+    	
+    	
+    	
+    	
     	
         public Manager(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
 				String Password, int PhoneNumber, double salary, Date hireDate) {
@@ -23,64 +30,73 @@ import teacher.Teacher;
         private List<Teacher> teachers = new ArrayList<>();                        ///
         private List<Student> students = new ArrayList<>();                        /// VSE DOLZHNO HRANITCA V DB
         private List<Request> requests = new ArrayList<>();                        ///
-        private Map<Course, Teacher> courseAssignments = new HashMap<>();          ///
 
         // Constructor, getters, setters, and other methods specific to Manager
 
-        // Method to manage news
-        public void manageNews(String news) {
-            // Implementation to manage and publish news
-            System.out.println("News managed: " + news);
+        
+        
+//    	
+        
+        Login Manager
+        ManageNews
+        1.
+        2.
+        3.
+        4.
+        1. Add news  
+        2. Remove news
+        enter: id : 3
+       
+        RemoveNews(3) {
+        	
         }
+        
+        1. Add news
+        Choose category: 1
+        1.Res
+        2.Study
+        3.Social
+        Category cat = Category.get(sc.getInt());
+        
+        Enter headline: ladjaldka;dk;akd
+        String hl = sc.nextline();
+        
+        Enter topic: akd;akdka;dka;ldk
+        String tp = sc.nextLIne()
+        
+        News news1 = new News(hd, tp, cat);
+        DB.addNews()
+        
+        
 
-        // Method to prioritize news by its category
-        public void prioritizeNews(String category) {
-            // Implementation to prioritize news based on category
-            System.out.println("News prioritized for category: " + category);
-        }
 
-        // Method to get information about a student
         public void infoStudent(Student student) {
             // Implementation to display information about a student
             System.out.println("Student Information: " + student);
         }
 
-        // Method to get information about a teacher
         public void infoTeacher(Teacher teacher) {
             // Implementation to display information about a teacher
             System.out.println("Teacher Information: " + teacher);
         }
 
-        // Method to create reports
-        public void createReports() {                                   /// uberi
-            // Implementation to create and generate reports
-            System.out.println("Reports created successfully.");
-        }
 
         // Method to announce a research paper
-        public void announceResearchPaper(String researchPaper) {       /// uberi
-            // Implementation to announce a research paper
-            System.out.println("Research Paper Announced: " + researchPaper);
+        public void announceResearchPaper(ResearchPaper paper) {       
+        	News n = new News("RP announced", paper.getAnnotation(), Category.RESEARCHER)
+        	DB.addNews(n);
         }
     
 
     
 	    public void viewRequests() {                           /// prosto DB.getRequests() (Receiver = Manager)
-	        for (Request request : requests) {
-	            if (request.signedByDean) {
-	                // что напишем сюда? 
-	            } else {
-	                // и здесь 
-	            }
-	        }
+	    	DB.getRequests() (Receiver = Manager)
 	    }
 	    
-	    public void assignCourseToTeacher(Course course, Teacher teacher) {
-	        courseAssignments.put(course, teacher);
-	    }
+
 	    
-	    public void createStatisticalReports() {                         /// uberi
-	        
+	    public void run() {
+	    	
 	    }
 
     

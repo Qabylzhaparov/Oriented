@@ -4,6 +4,7 @@ package manager;
 import java.util.*;
 
 import student.*;
+import teacher.Teacher;
 
 
 public class OR extends Manager {
@@ -37,18 +38,24 @@ public class OR extends Manager {
     }
 
     
-    public void assignCourses(Student student, List<Course> courses) {
-        
-        student.getCourses().add(courses);
+    
+    assignCtoS
+    choose S
+    Student s =
+    if credits > 30
+        error
+    else assignCtoS()
+    
+    
+    
+    public void assignCoursesToStudent(Student student, Course courses) {
+        if 
+        student.addCourse(course);
     }
-
-  
-    public void approveRegistration(Student student) {
-        
-        registeredStudents.add(student);
-        System.out.println("Registration approved for student: " + student.getName());
+    
+    public void assignCourseToTeacher(Course course, Teacher teacher) {
+        course.addInstructor(teacher);
     }
-
    
     public void setRegistrationPeriod(Date startDate, Date endDate) {
         this.registrationPeriodStartDate = startDate;
@@ -58,13 +65,17 @@ public class OR extends Manager {
 
     
     public void closeRegistration() {
-        System.out.println("Registration closed.");
+    	registeration = false;
     }
 
     
     public void openRegistration() {
-        System.out.println("Registration opened.");
+    	registration = true;
     }
 
+
+    
+    
+    
    
 }

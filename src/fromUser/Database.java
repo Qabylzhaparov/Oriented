@@ -2,6 +2,7 @@ package fromUser;
 
 import java.util.*;
 
+import manager.News;
 import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
@@ -10,11 +11,12 @@ import student.*;
 
 public class Database {
     private Vector <Message> Messages;
-    private Vector <Course> Allcourses;
+    private Map <Integer, Course> Allcourses;   /// id, course
     private Vector <Student> Allstudents;
     private Vector <GraduateStudent> AllstudentMaster;
     private ArrayList<User> users;
-    private static Set<ResearchPaper> researchPapers;		
+    private static Set<ResearchPaper> researchPapers;	
+    private Vector<News> news;
     
     public Database() {
     	

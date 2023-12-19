@@ -1,7 +1,7 @@
 package manager;
 
 public enum Category {
-    SCIENCE,
+    RESEARCHER,
     STUDY,
     SOCIAL
 }

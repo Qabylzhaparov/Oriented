@@ -10,11 +10,52 @@ public class News extends Manager{         /// uberi extends i izmeni constructo
 	private String headline;
 	private String topic;
     private Date publicationDate;
-    private List<String> content;
-    private List<String> pinned;
     private List<String> comments;
-    private List<Researcher> topCitedResearchers;
     private Category category;
+    
+    
+    
+    news1 = headline -..., topic -...., date, 
+    news2
+    
+    Vector<News> newslist 
+    DB
+    
+    User viewnews
+    
+    ViewNews() {
+    	viewResearNew()
+    	viewStudyNew()
+    }
+    
+    ViewREsearcherNEws(){
+    	for resar
+    }
+    
+    ViewStudyNews(){
+    	for study
+    }
+    
+    ViewNews()
+    1. Assylzhan  announced paper
+    2. Fuzzy get cited more than 50
+    3.Sabak
+    
+    1. ViewTopCitedR    
+    DB.getPAper
+    for if cited > 10 syso
+    
+    2. Sort Researcher News by
+    If category == rese
+    	
+    1. Alphabetically
+    2. Date
+    3. Cited
+    
+    1. Comparator c = new DateCompaarot();
+    Sort(comparator c)
+    
+    
     
     public News(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email, String Password,
 			int PhoneNumber, double salary, Date hireDate) {
@@ -50,4 +91,24 @@ public class News extends Manager{         /// uberi extends i izmeni constructo
         
         System.out.println("News prioritized as the 1st place in top cited.");
     }
+    
+    public void addComment(String comment) {
+    	comments.add(comment);
+    }
+    
+    Login Manager
+    1. ViewInfoAbout Student 2. Assign course   3.Managenews
+    
+    
+    
+    
+    Login User
+    1. ViewNews
+    General    pinned top cited researchers 
+                      
+    
+    
+    
+    
+    
 }
