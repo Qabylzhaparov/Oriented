@@ -53,7 +53,7 @@ public class Teacher extends Employee {
 
 	public void viewStudentInfo() {
 		System.out.println("Choose student: ");
-		for(Student s: Database.getStudents()) {
+		for(Student s: Database.getAllstudents()) {
 			System.out.println(s.getID() + "  " + s.getFirstName() + " " + s.getLastName());
 		}
 		String schoice = in.nextLine();

@@ -1,5 +1,5 @@
 package fromUser;
 
-public class MessageType {
-
+public enum MessageType {
+	Message, Request, Complaint
 }

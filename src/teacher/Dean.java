@@ -1,34 +1,39 @@
 package teacher;
 import java.util.Vector;
 
+import fromUser.Database;
 import fromUser.Message;
-import student.SchoolType;
+import manager.SchoolType;
 
 
 public class Dean extends Teacher implements Heads {
-    private SchoolType deanOfSchool;
-    
-//    public Dean(SchoolType deanOfSchool) {
-//        this.deanOfSchool = deanOfSchool;
-//    }
+	private SchoolType deanOfSchool;
+	
+	public Dean() {
+    	super();
+    }
+	
+	public Dean(String name) {
+		super(name);
+	}
+
+    public Dean(String name, SchoolType deanOfSchool) {
+        super(name);
+    	this.deanOfSchool = deanOfSchool;
+    }
     
     
     public SchoolType getDeanOfSchool() {
         return this.deanOfSchool;
     }
     
-    public void setDeanOfSchool(School deanOfSchool) {
+    public void setDeanOfSchool(SchoolType deanOfSchool) {
         this.deanOfSchool = deanOfSchool;
     }
 
     // Operations 
     public Vector<Message> getComplaints() {
         return Database.getComplaints();
-    }
-
-    @Override
-    public Vector<String> getSchoolReports() {
-        return Database.getSchoolReports();
     }
 
     @Override
@@ -46,5 +51,11 @@ public class Dean extends Teacher implements Heads {
 	public void signToRequest(Message message) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Vector<String> getSchoolReports() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

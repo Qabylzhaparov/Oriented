@@ -47,7 +47,7 @@ public class Employee extends User {
     	/// syso sended
     }
     
-    public void sentOrder(String order) {
+    public void sendOrder(String order) {
     	/// DB.addOrder(order)
     }
     

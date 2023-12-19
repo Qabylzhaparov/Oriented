@@ -2,11 +2,14 @@ package student;
 
 
 import java.util.List;
+import java.util.Scanner;
 
+import fromUser.Database;
 import manager.SchoolType;
 import teacher.Teacher;
 
 public class Course {
+	Scanner in = new Scanner(System.in);
 	private static int courseId;
 	    
     private String courseName;
@@ -92,6 +95,14 @@ public class Course {
 
     public void addInstructor(Teacher teacher) {
     	instructors.add(teacher);
+    }
+    
+    public static void viewCourseInfo(List<Course> courses) {
+    	System.out.println("Choose course: ");
+		for(Course c: courses) {
+			System.out.println(c.getCourseId() + ". " + c.getCourseName());
+		}
+		System.out.println(Database.getCourseAtID(in.nextInt()-1).toString());
     }
 }
 

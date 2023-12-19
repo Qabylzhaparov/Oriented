@@ -11,8 +11,8 @@ import student.*;
 
 public class Database {
     private Vector <Message> Messages;
-    private Map <Integer, Course> Allcourses;   /// id, course
-    private Vector <Student> Allstudents;
+    private static Map <Integer, Course> allcourses;   /// id, course
+    private static Vector<Student> allstudents;
     private Vector <GraduateStudent> AllstudentMaster;
     private ArrayList<User> users;
     private static Set<ResearchPaper> researchPapers;	
@@ -35,12 +35,12 @@ public class Database {
         this.Allcourses = Allcourses;
     }
 
-    public Vector<Student> getAllstudents() {
-        return this.Allstudents;
+    public static Vector<Student> getAllstudents() {
+        return allstudents;
     }
 
     public void setAllstudents(Vector<Student> Allstudents) {
-        this.Allstudents = Allstudents;
+        this.allstudents = Allstudents;
     }
 
     public Vector<GraduateStudent> getAllstudentMaster() {
@@ -61,5 +61,31 @@ public class Database {
     }
 	public static Set<ResearchPaper> getResearchPapers() {
 		return researchPapers;
+	}
+	public static Vector<Message> getComplaints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public static void addMessage(Message m) {
+		// TODO Auto-generated method stub
+		
+	}
+	public static void write() {
+		// TODO Auto-generated method stub
+		
+	}
+	public static Course getCourseAtID(Integer choice) {
+		return allcourses.get(choice-1);
+	}
+	public static Vector<Student> getStudents() {
+		return allstudents;
+	}
+	public static Student getStudentbyID(String schoice) {
+		for(Student s: allstudents) {
+			if(s.getID().equals(schoice)) {
+				return s;
+			}
+		}
+		return null;
 	}
 }

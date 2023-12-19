@@ -11,22 +11,24 @@ public class Message{
     private Date DateOfSend;
     private String Text;
     private User Author;
-    private String Category;
+    private MessageType Category;
     private StatusType Status;
     private UrgencyLevel UrgencyLevel;     /// kishi arip
 
     {
     	ID++;                            /// initil. block           
     }
-    /// empty constr
+    
+    public Message() {
+    	
+    }
     
     /// constr with text, status, urgencyLevel(kak ya pokazal)
     
-    public Message(String iD, Date dateOfSend, String text, User author, String category,
-    		StatusType status, UrgencyLevel urgencyLevel) {
+    public Message(String text, User author, MessageType category,
+    		UrgencyLevel urgencyLevel) {
 		super();
-		ID = iD;
-		DateOfSend = dateOfSend;
+		DateOfSend = new Date();
 		Text = text;
 		Author = author;
 		Category = category;

@@ -1,10 +1,20 @@
 package fromUser;
 
 public enum UrgencyLevel {
-	LOW, MEDIUM, HIGH;
+	LOW, MED, HIGH;
 
-	Object stream() {
-		// TODO Auto-generated method stub
-		return null;
+	public static UrgencyLevel fromString(String str) {
+		switch (str.toUpperCase()) {
+        case "LOW":
+            return LOW;
+        case "MED":
+            return MED;
+        case "HIGH":
+            return HIGH;
+        default:
+            throw new IllegalArgumentException("Invalid urgency level: " + str);
+    }
 	}
+
+	
 }

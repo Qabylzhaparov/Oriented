@@ -85,45 +85,39 @@ public class Schedule {
     
 
     
-    public static void main(String[] args) {
-    	// Создаем объект Schedule
-        Schedule schedule = new Schedule();
-
-        // Устанавливаем значения
-        schedule.setAcademicYear(2023);
-        schedule.setTerm("Spring");
-
-        // Создаем список курсов
-        List<Course> courses = new ArrayList<>();
-        courses.add(new Course("Discrete Math"));
-        courses.add(new Course("History"));
-        courses.add(new Course("Physics"));
-        courses.add(new Course("Computer Science"));
-        schedule.setCourses(courses);
-
-        // Создаем список уроков
-        List<Lesson> lessons = new ArrayList<>();
-        Teacher mathTeacher = new Teacher("J. Antony");
-        Teacher historyTeacher = new Teacher("J. Mukash");
-        Teacher physicsTeacher = new Teacher("S. Johnson");
-        Teacher computerScienceTeacher = new Teacher("M. Smith");
-
-        lessons.add(new Lesson(courses.get(0), LessonType.P, mathTeacher, "101", "10:00", WeekDay.MON));
-        lessons.add(new Lesson(courses.get(1), LessonType.L, historyTeacher, "102", "11:00", WeekDay.TUE));
-        lessons.add(new Lesson(courses.get(2), LessonType.P, physicsTeacher, "103", "14:00", WeekDay.WED));
-        lessons.add(new Lesson(courses.get(3), LessonType.L, computerScienceTeacher, "104", "15:00", WeekDay.THU));
-
-        // Добавляем еще уроки
-        lessons.add(new Lesson(courses.get(0), LessonType.L, mathTeacher, "105", "13:00", WeekDay.MON));
-        lessons.add(new Lesson(courses.get(1), LessonType.P, historyTeacher, "106", "16:00", WeekDay.TUE));
-        lessons.add(new Lesson(courses.get(2), LessonType.L, physicsTeacher, "107", "12:00", WeekDay.WED));
-        lessons.add(new Lesson(courses.get(3), LessonType.P, computerScienceTeacher, "108", "17:00", WeekDay.THU));
-        lessons.add(new Lesson(courses.get(0), LessonType.P, mathTeacher, "109", "11:00", WeekDay.FRI));
-        lessons.add(new Lesson(courses.get(1), LessonType.L, historyTeacher, "110", "14:00", WeekDay.FRI));
-
-        schedule.setLessons(lessons);
-
-        schedule.printSchedule();
-    }
-    
+//    public static void main(String[] args) {
+//        Schedule schedule = new Schedule();
+//
+//        schedule.setAcademicYear(2023);
+//        schedule.setTerm("Spring");
+//
+//        List<Course> courses = new ArrayList<>();
+//        courses.add(new Course("Discrete Math"));
+//        courses.add(new Course("History"));
+//        courses.add(new Course("Physics"));
+//        courses.add(new Course("Computer Science"));
+//        schedule.setCourses(courses);
+//
+//        List<Lesson> lessons = new ArrayList<>();
+//        Teacher mathTeacher = new Teacher("J. Antony");
+//        Teacher historyTeacher = new Teacher("K. West");
+//        Teacher physicsTeacher = new Teacher("S. Johnson");
+//        Teacher computerScienceTeacher = new Teacher("M. Smith");
+//
+//        lessons.add(new Lesson(courses.get(0), LessonType.P, mathTeacher, "101", "10:00", WeekDay.MON));
+//        lessons.add(new Lesson(courses.get(1), LessonType.L, historyTeacher, "102", "11:00", WeekDay.TUE));
+//        lessons.add(new Lesson(courses.get(2), LessonType.P, physicsTeacher, "103", "14:00", WeekDay.WED));
+//        lessons.add(new Lesson(courses.get(3), LessonType.L, computerScienceTeacher, "104", "15:00", WeekDay.THU));
+//        lessons.add(new Lesson(courses.get(0), LessonType.L, mathTeacher, "105", "13:00", WeekDay.MON));
+//        lessons.add(new Lesson(courses.get(1), LessonType.P, historyTeacher, "106", "16:00", WeekDay.TUE));
+//        lessons.add(new Lesson(courses.get(2), LessonType.L, physicsTeacher, "107", "12:00", WeekDay.WED));
+//        lessons.add(new Lesson(courses.get(3), LessonType.P, computerScienceTeacher, "108", "17:00", WeekDay.THU));
+//        lessons.add(new Lesson(courses.get(0), LessonType.P, mathTeacher, "109", "11:00", WeekDay.FRI));
+//        lessons.add(new Lesson(courses.get(1), LessonType.L, historyTeacher, "110", "14:00", WeekDay.FRI));
+//
+//        schedule.setLessons(lessons);
+//
+//        schedule.printSchedule();
+//    }
+//    
 }
