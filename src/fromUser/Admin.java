@@ -5,8 +5,7 @@ import java.util.stream.Collectors;
 
 
 public class Admin extends User{
-	private List<User> users;
-	
+	Scanner in = new Scanner(System.in);
 	/// empty constructor
 	
 	/// constructor with just name
@@ -33,14 +32,20 @@ public class Admin extends User{
     }
 
     public boolean addUser(User user) {
-        // Check if the user already exists before adding
-        if (!users.contains(user)) {
-            users.add(user);
+    	System.out.println("Enter name: ");
+        if (!Database.INSTANCE.users.contains(in.next())) {
+            Database.INSTANCE.users.add(new User(in.next()));
+            System.out.println("Enter password: ");
+            Database.INSTANCE
             return true;
         } else {
             System.out.println("User already exists.");
             return false;
-        }
+        }    	
+    	
+    	
+        // Check if the user already exists before adding
+
     }
 
     public boolean removeUser(User user) {

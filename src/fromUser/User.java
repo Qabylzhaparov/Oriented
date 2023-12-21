@@ -16,7 +16,10 @@ public class User implements Comparable<User>, Cloneable, UserInterface{
     public User() {
     	
     }
-    
+    public User(String Email, String Password) {
+    	this.Email = Email;
+    	this.Password = Password;
+    }
     public User(String name) {
     	this.FirstName = name;
     }
