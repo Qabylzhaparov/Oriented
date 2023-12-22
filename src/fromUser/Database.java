@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import manager.News;
+import research.ResearchJournal;
 import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
@@ -32,51 +33,12 @@ public class Database implements Serializable {
     private Vector<News> news;
     
     private static Vector<String> strategicGoals;
-    
-    public static Database INSTANCE;
-    static {
-        INSTANCE = new Database();
-        try {
-            read();
-            System.out.println("Database instance initialized successfully.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-     private Database() {
-        this.users = new ArrayList<>();
-    }
+	private static Set<ResearchJournal> journals;
+	private static Vector<Researcher> researchers;
 
-    
-     public static void read() {
-         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Database"))) {
-             INSTANCE = (Database) ois.readObject();
-         } catch (IOException | ClassNotFoundException e) {
-             e.printStackTrace();
-         }
-     }
-
-     public static void write() {
-         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Database"))) {
-             oos.writeObject(INSTANCE);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-     }
-   
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public List<User> getUserList() {
-        return users;
-    }
-	public static int nextId() {
-		// TODO Auto-generated method stub
-		return  INSTANCE.users.size()+1;
-	}
-	
+    public Database() {
+    	
+    }    
     public Vector <Message> getMessages() {
         return this.Messages;
     }
@@ -154,6 +116,29 @@ public class Database implements Serializable {
 			strategicGoals.remove(goal);
 	        System.out.println("Strategic goal '" + goal + "' removed");
 		} else System.out.println("No such goal");
+	}
+	public static Set<ResearchJournal> getResearchJournal() {
+		return journals;
+	}
+	public static Vector<Researcher> getResearcher() {
+		return researchers;
+	}
+	public static void setResearchJournal(Set<ResearchJournal> researchJournal) {
+		Database.journals = researchJournal;
+	}
+	public static void setResearcher(Vector<Researcher> researchers) {
+		Database.researchers = researchers;
+		
+	}
+	public static Researcher getResearcher(int id) {
+		return (Researcher) researchers.stream().filter(n->n.getId().equals(id));
+	}
+	public static void addResearchPaper(ResearchPaper newPaper) {
+		researchPapers.add(newPaper);
+	}
+	public static ResearchPaper getResearchPapers(String choice) {
+		return (ResearchPaper) researchPapers.stream()
+						     .filter(n->n.getTitle().equals(choice));
 	}
 	
 	
