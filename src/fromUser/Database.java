@@ -3,6 +3,7 @@ package fromUser;
 import java.util.*;
 
 import manager.News;
+import research.ResearchJournal;
 import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
@@ -19,7 +20,9 @@ public class Database {
     private Vector<News> news;
     
     private static Vector<String> strategicGoals;
-    
+	private static Set<ResearchJournal> journals;
+	private static Vector<Researcher> researchers;
+
     public Database() {
     	
     }    
@@ -108,6 +111,29 @@ public class Database {
 			strategicGoals.remove(goal);
 	        System.out.println("Strategic goal '" + goal + "' removed");
 		} else System.out.println("No such goal");
+	}
+	public static Set<ResearchJournal> getResearchJournal() {
+		return journals;
+	}
+	public static Vector<Researcher> getResearcher() {
+		return researchers;
+	}
+	public static void setResearchJournal(Set<ResearchJournal> researchJournal) {
+		Database.journals = researchJournal;
+	}
+	public static void setResearcher(Vector<Researcher> researchers) {
+		Database.researchers = researchers;
+		
+	}
+	public static Researcher getResearcher(int id) {
+		return (Researcher) researchers.stream().filter(n->n.getId().equals(id));
+	}
+	public static void addResearchPaper(ResearchPaper newPaper) {
+		researchPapers.add(newPaper);
+	}
+	public static ResearchPaper getResearchPapers(String choice) {
+		return (ResearchPaper) researchPapers.stream()
+						     .filter(n->n.getTitle().equals(choice));
 	}
 	
 	

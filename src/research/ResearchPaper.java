@@ -1,12 +1,15 @@
 package research;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import fromUser.Database;
+import intranetIn5min.src.Data;
 
 public class ResearchPaper {
+	Scanner in = new Scanner(System.in);
+
     private String title;
-    private Vector<Researcher> author;
     private Integer citations;
     private String annotation;
     private Vector<String> keywords;
@@ -17,11 +20,26 @@ public class ResearchPaper {
     private String isbn;
     private String doi;
 
-    private Set<Researcher> researcher;
-    private Set<ResearchJournal> researchJournal;
     private Vector<String> feedbacks;
 
-    public String getTitle() {
+    
+    public ResearchPaper(String title, String annotation, Vector<String> keywords, String section, String content,
+			Integer pages, String isbn, String doi) {
+		super();
+		this.title = title;
+		this.citations = 0;
+		this.annotation = annotation;
+		this.keywords = keywords;
+		this.section = section;
+		this.content = content;
+		this.date = new Date();
+		this.pages = pages;
+		this.isbn = isbn;
+		this.doi = doi;
+		this.feedbacks = new Vector<String>();
+	}
+
+	public String getTitle() {
         return this.title;
     }
 
@@ -29,12 +47,10 @@ public class ResearchPaper {
         this.title = title;
     }
 
-    public Vector<Researcher> getAuthor() {
-        return this.author;
-    }
-
-    public void setAuthor(Vector<Researcher> author) {
-        this.author = author;
+    public Set<Researcher> getAuthor() {
+        return Database.getResearcher().stream().
+				           filter(n->n.getPapers().contains(this)).
+				           collect(Collectors.toSet());
     }
 
     public Integer getCitations() {
@@ -70,7 +86,14 @@ public class ResearchPaper {
     }
 
     public String getContent() {
-        return this.content;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < this.content.length(); i++) {
+            result.append(content.charAt(i));
+            if (i % 50 == 0) {
+                result.append("\n");
+            }
+        }
+        return result.toString();
     }
 
     public void setContent(String content) {
@@ -112,61 +135,122 @@ public class ResearchPaper {
     public Vector<String> getFeedbacks() {
         return this.feedbacks;
     }
-
-	public Set<Researcher> getResearcher() {
-		return researcher;
-	}
-
-	public void setResearcher(Set<Researcher> researcher) {
-		this.researcher = researcher;
-	}
     
+	public void setResearcher(Vector<Researcher> researcher) {
+		Database.setResearcher(researcher);
+	}
+	
+	public Set<Researcher> getResearcher() {
+		return Database.getResearcher().stream().
+                filter(n->n.getPapers().contains(this))
+                .collect(Collectors.toSet());	}
+
 	public Set<ResearchJournal> getResearchJournal() {
-		return researchJournal;
+		return Database.getResearchJournal().stream().
+				 filter(n->n.getPublishedPapers().contains(this))
+				 .collect(Collectors.toSet());
 	}
 
 	public void setResearchJournal(Set<ResearchJournal> researchJournal) {
-		this.researchJournal = researchJournal;
+		Database.setResearchJournal(researchJournal);
 	}
 	
 	
     
     // Operations
 
-    public String getCitation(FormatType format) {
-        if (format.equals(FormatType.PLAIN_TEXT)) {
+    public String getCitation() {
+    	System.out.println("Choose format: 1) Plain text  2) Bibtex");
+    	int choice = in.nextInt();
+        if (choice==1) {
         	citations++;
             return getAuthor() + ", " + getTitle() + ", " + getSection() + ", " + getDate().getYear();
-        } else if (format.equals(FormatType.BIBTEX)) {
+        } else if (choice==2) {
             citations++;
         	return "@article{author = {" + getAuthor() + "}, title = {" + getTitle() + "}, section = {" + 
                                getSection() +"}, year = {" + getDate().getYear() + "}}";
-        } else {
-            return "";
-        }
+        } 
+        return "Wrong type!";
+        
     }
 
-    public Set<ResearchPaper> searchRelatedPapers() {
-        return Database.getResearchPapers().stream().
+    public void searchRelatedPapers() {
+        Database.getResearchPapers().stream().
         		filter(paper -> paper.getKeywords().stream().anyMatch(this.keywords::contains))
-                .collect(Collectors.toSet());
+                .forEach(System.out::println);;
     }
 
-
-    public void writeFeedback(String feedback) {
-        this.feedbacks.add(feedback);
+    public void writeFeedback() {
+    	System.out.println("Enter feedback: ");
+    	String fb = in.nextLine();
+        this.feedbacks.add(fb);
+        System.out.println("Feedback added!");
     }
 
+	private void readPaper(ResearchPaper paper) {
+	    System.out.println("Title: " + paper.getTitle());
+	    System.out.println("Authors: " + paper.getAuthor().stream().map(Researcher::getName).collect(Collectors.joining(", ")));
+	    System.out.println("Section: " + paper.getSection());
+	    System.out.println("Date: " + paper.getDate());
+	    System.out.println("Pages: " + paper.getPages());
+	    System.out.println("Content: " + paper.getContent());
+	    System.out.println("Keywords: " + paper.getKeywords().stream().collect(Collectors.joining(", ")));
+	    System.out.println("ISBN: " + paper.getISBN());
+	    System.out.println("DOI: " + paper.getDOI());
+	}		
+	
+    
+    
+    
+    
+	private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean runRPaper(ResearchPaper paper) throws IOException {
+		try {
+			System.out.println("Welcome to Research Paper Menu!");
+			menu: while(true) {
+				System.out.println("What do you want to do?\n1) Read this paper  2) Get citation  3) Search related papers  4) Write feedback  5) Exit RPaperMenu  6)Exit");
+				int choice = in.nextInt();
+				read: if(choice==1) {
+					readPaper(paper);
+					System.out.println("\n1) Get citation  2) Search related papers  4) Write feedback  5) Return back");
+					choice = in.nextInt();
+					if(choice==1) break read;
+				}
+				if(choice==2) {
+					getCitation();
+					System.out.println("\nReturning back...\n\n");
+					continue menu;
+				}if(choice==3) {
+					searchRelatedPapers();
+					System.out.println("\nReturning back...\n\n");
+					continue menu;
+				}if(choice==4) {
+					writeFeedback();
+					System.out.println("\nReturning back...\n\n");
+					continue menu;
+				}if(choice==5) {
+					return true;
+				}if(choice==6) {
+					exit();
+					break menu;
+				}
+			}
+		} catch(Exception e) {
+			System.out.println("Something went wrong... \n Saving session...");
+			e.printStackTrace();
+			save();
+		}
+		return false;
+	}
 }
-
-//    public Set<ResearchPaper> searchRelatedPapers() {
-//        Set<ResearchPaper> relatedPapers = new HashSet<ResearchPaper>();
-//        for(ResearchPaper paper : Database.getResearchPapers()) {
-//            for(String keyword : this.keywords) {
-//                if(paper.contains(keyword)) {
-//                    relatedPapers.add(paper);
-//                }
-//            }
-//        }
-//        return relatedPapers;
-//    }

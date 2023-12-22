@@ -21,7 +21,6 @@ public class Researcher implements UserInterface{
 
     private String name;
     private String surname;
-    private String id;
     private String researchArea;
     private ArrayList<Integer> citations;
     private Integer yearsOfExperience;
