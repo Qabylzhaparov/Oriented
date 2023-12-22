@@ -1,22 +1,26 @@
 package fromUser;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import manager.News;
 
-public class User implements Comparable<User>, Cloneable, UserInterface{
+public class User implements Comparable<User>, Cloneable, UserInterface, Serializable{
     private UserType UserType;
     private String ID;
     private String FirstName;
     private String LastName;
-    private String Email;
-    private String Password;
+    protected String Email;
+    protected String Password;
     private int PhoneNumber;   /// kishi arip
   
     public User() {
     	
     }
-    
+    public User(String Email, String Password) {
+    	this.Email = Email;
+    	this.Password = Password;
+    }
     public User(String name) {
     	this.FirstName = name;
     }
@@ -119,23 +123,34 @@ public class User implements Comparable<User>, Cloneable, UserInterface{
                 ", PhoneNumber=" + PhoneNumber +
                 '}';
     }
-    
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        User user = (User) obj;
-        return PhoneNumber == user.PhoneNumber &&
-                Objects.equals(ID, user.ID) &&
-                Objects.equals(FirstName, user.FirstName) &&
-                Objects.equals(LastName, user.LastName) &&
-                Objects.equals(Email, user.Email) &&
-                Objects.equals(Password, user.Password);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(Email, user.Email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, FirstName, LastName, Email, Password, PhoneNumber);
+        return Objects.hash(Email);
     }
+//    
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        User user = (User) obj;
+//        return PhoneNumber == user.PhoneNumber &&
+//                Objects.equals(ID, user.ID) &&
+//                Objects.equals(FirstName, user.FirstName) &&
+//                Objects.equals(LastName, user.LastName) &&
+//                Objects.equals(Email, user.Email) &&
+//                Objects.equals(Password, user.Password);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(ID, FirstName, LastName, Email, Password, PhoneNumber);
+//    }
 
     @Override
     public int compareTo(User otherUser) {

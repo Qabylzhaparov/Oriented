@@ -1,5 +1,12 @@
 package fromUser;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 import manager.News;
@@ -8,14 +15,20 @@ import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
 import student.*;
+import fromUser.*;
 
 
-public class Database {
-    private static Vector <Message> Messages;
+public class Database implements Serializable {
+    /**
+	 * 
+	 */
+//	private static final long serialVersionUID = 1087290420221856411L;
+	private static Vector <Message> Messages;
     private static Map <Integer, Course> allcourses;   /// id, course
     private static Vector<Student> allstudents;
     private Vector <GraduateStudent> AllstudentMaster;
-    private ArrayList<User> users;
+    ArrayList<User> users;
+//    private List <User> users;
     private static Set<ResearchPaper> researchPapers;	
     private Vector<News> news;
     
@@ -33,11 +46,11 @@ public class Database {
         this.Messages = Messages;
     }
 
-    public Vector<Course> getAllcourses() {
-        return this.Allcourses;
+    public Map<Integer, Course> getAllcourses() {
+        return this.allcourses;
     }
-    public void setAllcourses(Vector<Course> Allcourses) {
-        this.Allcourses = Allcourses;
+    public void setAllcourses(Map<Integer, Course> Allcourses) {
+        this.allcourses = allcourses;
     }
 
     public static Vector<Student> getAllstudents() {
@@ -55,12 +68,7 @@ public class Database {
     public void setAllstudentMaster(Vector<GraduateStudent> AllstudentMaster) {
         this.AllstudentMaster = AllstudentMaster;
     }
-    public ArrayList<User> getUsers(){
-		return users;
-    }
-    public void setUsers(ArrayList<User> users) {
-    	this.users = users;
-    }
+
     public static boolean addResearchProject(ResearchProject researchProject) {
     	return true;
     }
@@ -72,10 +80,7 @@ public class Database {
 		// TODO Auto-generated method stub
 		
 	}
-	public static void write() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	/// Астындагынын бари меники
 	public static Vector<Message> getComplaints() {
 		// TODO Auto-generated method stub
