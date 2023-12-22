@@ -22,7 +22,8 @@ public class Database implements Serializable {
     /**
 	 * 
 	 */
-//	private static final long serialVersionUID = 1087290420221856411L;
+	private static final long serialVersionUID = 8417587056491157272L;
+
 	private static Vector <Message> Messages;
     private static Map <Integer, Course> allcourses;   /// id, course
     private static Vector<Student> allstudents;
@@ -36,9 +37,59 @@ public class Database implements Serializable {
 	private static Set<ResearchJournal> journals;
 	private static Vector<Researcher> researchers;
 
-    public Database() {
-    	
-    }    
+	public static Database INSTANCE;
+    static {
+        INSTANCE = new Database();
+        try {
+            read();
+            System.out.println("Database instance initialized successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     private Database() {
+        this.users = new ArrayList<>();
+    }
+
+    
+     public static void read() {
+    	    File file = new File("SystemDatabase");
+
+    	    if (file.exists()) {
+    	        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+    	            INSTANCE = (Database) ois.readObject();
+    	        } catch (IOException | ClassNotFoundException e) {
+    	            e.printStackTrace();
+    	        }
+    	    } else {
+    	        // Handle the case where the file does not exist
+    	        System.out.println("The file 'SystemDatabase' does not exist.");
+    	        // You might want to initialize a new instance or take appropriate action here
+    	        INSTANCE = new Database();
+    	    }
+    	}
+
+     public static void write() {
+         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("SystemDatabase"))) {
+             oos.writeObject(INSTANCE);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
+   
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public ArrayList<User> getUserList() {
+        return users;
+    }
+	public static int nextId() {
+		// TODO Auto-generated method stub
+		return  INSTANCE.users.size()+1;
+	}
+	
     public Vector <Message> getMessages() {
         return this.Messages;
     }
@@ -80,6 +131,7 @@ public class Database implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	/// Астындагынын бари меники
 	public static Vector<Message> getComplaints() {

@@ -12,7 +12,11 @@ import manager.News;
 // Enter your Email and password
 // if Admin thenn open Admin's display, if Student then open Students display
 public class User implements Comparable<User>, Cloneable, UserInterface, Serializable{
-   static Scanner in = new Scanner(System.in);
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7529410772627156558L;
+static Scanner in = new Scanner(System.in);
 	private UserType userType;
     private String ID;
     private String FirstName;
@@ -148,13 +152,24 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
 				save();
 			}
 		}
+	
     
     ///public viewNews()
 
     public void commentNews(News news, String comment) {
          news.addComment(comment);                                  /// navernoe news.addComment(String comment)
     }                                                                       /// a ne return comment
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(Email, user.Email) && Objects.equals(Password, user.Password);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(Email, Password);
+    }
     @Override
     public String toString() {
         // Placeholder logic for generating a string representation of the user
@@ -168,18 +183,8 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
                 ", PhoneNumber=" + PhoneNumber +
                 '}';
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(Email, user.Email) && Objects.equals(Password, user.Password);
-    }
+ 
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(Email, Password);
-    }
 
 //    
 //    public boolean equals(Object obj) {

@@ -1,11 +1,16 @@
 package fromUser;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class Admin extends User{
+public class Admin extends User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5092781539768232544L;
 	Scanner in = new Scanner(System.in);
 	/// empty constructor
 	
