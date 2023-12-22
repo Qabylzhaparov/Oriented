@@ -17,12 +17,16 @@ import student.*;
 import fromUser.*;
 
 
-public class Database {
-    private static Vector <Message> Messages;
+public class Database implements Serializable {
+    /**
+	 * 
+	 */
+//	private static final long serialVersionUID = 1087290420221856411L;
+	private static Vector <Message> Messages;
     private static Map <Integer, Course> allcourses;   /// id, course
     private static Vector<Student> allstudents;
     private Vector <GraduateStudent> AllstudentMaster;
-    Vector<User> users  = new Vector<User>();
+    ArrayList<User> users;
 //    private List <User> users;
     private static Set<ResearchPaper> researchPapers;	
     private Vector<News> news;
@@ -30,33 +34,47 @@ public class Database {
     private static Vector<String> strategicGoals;
     
     public static Database INSTANCE;
-	static {
-		if(new File("data").exists()) {
-			try {
-				INSTANCE = read();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else INSTANCE = new Database();
-	}
-    
-    public Database() {
-    	
+    static {
+        INSTANCE = new Database();
+        try {
+            read();
+            System.out.println("Database instance initialized successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
-    public static Database read() throws IOException, ClassNotFoundException{
-    	FileInputStream fis = new FileInputStream("Database");
-    	ObjectInputStream ois = new ObjectInputStream(fis);
-    	return (Database) ois.readObject();
- 
+     private Database() {
+        this.users = new ArrayList<>();
     }
+
     
-	public static void write()throws IOException{
-		FileOutputStream fos = new FileOutputStream("Database");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(INSTANCE);
-		oos.close();
+     public static void read() {
+         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Database"))) {
+             INSTANCE = (Database) ois.readObject();
+         } catch (IOException | ClassNotFoundException e) {
+             e.printStackTrace();
+         }
+     }
+
+     public static void write() {
+         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Database"))) {
+             oos.writeObject(INSTANCE);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
+   
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public List<User> getUserList() {
+        return users;
+    }
+	public static int nextId() {
+		// TODO Auto-generated method stub
+		return  INSTANCE.users.size()+1;
 	}
 	
     public Vector <Message> getMessages() {
@@ -88,12 +106,7 @@ public class Database {
     public void setAllstudentMaster(Vector<GraduateStudent> AllstudentMaster) {
         this.AllstudentMaster = AllstudentMaster;
     }
-    public List<User> getUsers(){
-		return users;
-    }
-    public void setUsers(List<User> users) {
-    	this.users = users;
-    }
+
     public static boolean addResearchProject(ResearchProject researchProject) {
     	return true;
     }
