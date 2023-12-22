@@ -1,12 +1,19 @@
 package fromUser;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 import manager.News;
 
+// Wellcome!!!
+// Enter your Email and password
+// if Admin thenn open Admin's display, if Student then open Students display
 public class User implements Comparable<User>, Cloneable, UserInterface, Serializable{
-    private UserType UserType;
+   static Scanner in = new Scanner(System.in);
+	private UserType userType;
     private String ID;
     private String FirstName;
     private String LastName;
@@ -17,9 +24,10 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
     public User() {
     	
     }
-    public User(String Email, String Password) {
+    public User(String Email, String Password, UserType userType) {
     	this.Email = Email;
     	this.Password = Password;
+    	this.userType = userType;
     }
     public User(String name) {
     	this.FirstName = name;
@@ -27,8 +35,8 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
     
     /// constructor with firstname, lastname
     
-    public User(UserType UserType,String ID,String FirstName,String LastName, String Email, String Password, int PhoneNumber) {
-    	this.UserType = UserType;
+    public User(UserType userType,String ID,String FirstName,String LastName, String Email, String Password, int PhoneNumber) {
+    	this.userType = userType;
     	this.Email = Email;
     	this.FirstName = FirstName;
     	this.ID = ID;
@@ -38,10 +46,10 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
     }
     
     public UserType getUserType() {
-        return this.UserType;
+        return userType;
     }
-    public void setUserType(UserType UserType) {
-        this.UserType = UserType;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
     public String getID() {
         return this.ID;
@@ -80,29 +88,66 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
         this.PhoneNumber = PhoneNumber;
     }
     
+    
+    private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static User login() {
+	    System.out.println("Enter your Email: ");
+	    String enteredEmail = in.next();
+	    System.out.println("Enter your password: ");
+	    String enteredPassword = in.next();
+	    User enteredUser = new User(enteredEmail, enteredPassword, null);
 
+	    List<User> userList = Database.INSTANCE.getUserList();
 
-    public boolean login(String enteredPassword, String enteredEmail) {
-        // Check if the entered password matches the user's password
-        if (enteredPassword.equals(Password) && enteredEmail.equals(Email)) {
-            System.out.println("Login successful!");
-            return true;                                                    /// logica logina
-        } else {                                                            /// s sessiei shto nibud'
-            System.out.println("Incorrect password. Login failed.");        /// kak assylzhan skazal
-            return false;
-        }
-    }
+	    for (User user : userList) {
+	        if (user.equals(enteredUser)) {
+	            System.out.println("Login successful!");
+	            return user;
+	        }
+	    }
 
-    public boolean logout(int exit) {
-        // Placeholder logic for logout
-    	if(exit == 0) {
-    		System.out.println("Logout successful!");
-    		return true;                                                    /// navernoe ubrat s sessii
-    	}else {
-    		
-    		return false;
-    	}
-    }
+	    System.out.println("Incorrect email or password. Login failed.");
+	    return null;
+	}
+    
+	public void run() throws IOException {
+		try {
+			System.out.println("Welcome!");
+			menu : while(true){
+				System.out.println(" 1) Login \\n 2) Exit");
+				int choice = in.nextInt();
+				if(choice==1){
+					login: while(true){
+						login();
+						System.out.println("\n 1) login \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue login;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if (choice==2){
+					exit();
+					break menu;
+				}
+			}
+			}catch (Exception e) {
+				System.out.println("Something bad happened... \n Saving resources...");
+				e.printStackTrace();
+				save();
+			}
+		}
     
     ///public viewNews()
 
@@ -114,7 +159,7 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
     public String toString() {
         // Placeholder logic for generating a string representation of the user
         return "User{" +
-                "userType=" + UserType +
+                "userType=" + userType +
                 ", ID='" + ID + '\'' +
                 ", FirstName='" + FirstName + '\'' +
                 ", LastName='" + LastName + '\'' +
@@ -123,17 +168,19 @@ public class User implements Comparable<User>, Cloneable, UserInterface, Seriali
                 ", PhoneNumber=" + PhoneNumber +
                 '}';
     }
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(Email, user.Email);
+        return Objects.equals(Email, user.Email) && Objects.equals(Password, user.Password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Email);
+        return Objects.hash(Email, Password);
     }
+
 //    
 //    public boolean equals(Object obj) {
 //        if (this == obj) return true;

@@ -32,14 +32,17 @@ public class Admin extends User{
 			e.printStackTrace();
 		}
 	}
-	
     public void addUser() {
     	System.out.println("Enter new user's email: ");
     	Email = in.next();
-        if (!Database.INSTANCE.users.contains(new User(Email, ""))) {
+        if (!Database.INSTANCE.users.contains(new User(Email, "", null))) {
             System.out.println("Enter new user's password: ");
             Password = in.next();
-            Database.INSTANCE.users.add(new User(Email, Password));
+
+            System.out.println("Enter new user's UserType (STUDENT, TEACHER, MANAGER, TECHSUPPORTSPECIALIST, ADMIN): ");
+            UserType userType = UserType.valueOf(in.next().toUpperCase());
+            
+            Database.INSTANCE.users.add(new User(Email, Password, userType));
             System.out.println("New user added successfully!");
         } else {
             System.out.println("User already exists.");
@@ -49,7 +52,7 @@ public class Admin extends User{
         System.out.println("Enter user's email you want to delete: ");
         String emailToRemove = in.next();
 
-        User userToRemove = new User(emailToRemove, ""); 
+        User userToRemove = new User(emailToRemove, "", null); 
 
         if (Database.INSTANCE.getUserList().contains(userToRemove)) {
             Database.INSTANCE.getUserList().remove(userToRemove);
@@ -62,7 +65,7 @@ public class Admin extends User{
         System.out.println("Enter user's email you want to update: ");
         String emailToUpdate = in.next();
 
-        User userToUpdate = new User(emailToUpdate, "");
+        User userToUpdate = new User(emailToUpdate, "", null);
 
         if (Database.INSTANCE.getUserList().contains(userToUpdate)) {
             int index = Database.INSTANCE.getUserList().indexOf(userToUpdate);
@@ -89,10 +92,7 @@ public class Admin extends User{
     
     }
 
-    
-	/**
-	 * @throws IOException
-	 */
+
 	public void run() throws IOException {
 		try {
 			System.out.println("Welcome!");
@@ -100,11 +100,11 @@ public class Admin extends User{
 				System.out.println("What do you want to do?\n 1) Add new user \\n 2) Remove user \\n 3) Update user \\n 4) Return back \\n 5) Exit");
 				int choice = in.nextInt();
 				if(choice==1){
-					addStudent: while(true){
+					addUser: while(true){
 						addUser();
 						System.out.println("\n 1) Add new user \\n 2) Return back \\n 3) Exit");
 						choice = in.nextInt();
-						if(choice==1) continue addStudent;
+						if(choice==1) continue addUser;
 						if(choice==2) continue menu;
 						if(choice==3) {exit(); break menu;}
 						break;
