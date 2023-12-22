@@ -45,6 +45,44 @@ public class Admin extends User{
             System.out.println("User already exists.");
         }
     }
+    public void removeUser() {
+        System.out.println("Enter user's email you want to delete: ");
+        String emailToRemove = in.next();
+
+        User userToRemove = new User(emailToRemove, ""); 
+
+        if (Database.INSTANCE.getUserList().contains(userToRemove)) {
+            Database.INSTANCE.getUserList().remove(userToRemove);
+            System.out.println("User removed successfully!");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+    public void updateUser() {
+        System.out.println("Enter user's email you want to update: ");
+        String emailToUpdate = in.next();
+
+        User userToUpdate = new User(emailToUpdate, "");
+
+        if (Database.INSTANCE.getUserList().contains(userToUpdate)) {
+            int index = Database.INSTANCE.getUserList().indexOf(userToUpdate);
+            User existingUser = Database.INSTANCE.getUserList().get(index);
+            System.out.println("Enter new email: ");
+            String newEmail = in.next();
+
+            System.out.println("Enter new password: ");
+            String newPassword = in.next();
+            
+            existingUser.setEmail(newEmail);
+            existingUser.setPassword(newPassword);
+
+            System.out.println("User updated successfully!");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    
 
     public void closeScanner() {
         in.close();
@@ -52,16 +90,19 @@ public class Admin extends User{
     }
 
     
+	/**
+	 * @throws IOException
+	 */
 	public void run() throws IOException {
 		try {
 			System.out.println("Welcome!");
 			menu : while(true){
-				System.out.println("What do you want to do?\n 1) Add student \n 2) Exit");
+				System.out.println("What do you want to do?\n 1) Add new user \\n 2) Remove user \\n 3) Update user \\n 4) Return back \\n 5) Exit");
 				int choice = in.nextInt();
 				if(choice==1){
 					addStudent: while(true){
 						addUser();
-						System.out.println("\n 1) Add new user  \n 2) Return back \n 3) Exit");
+						System.out.println("\n 1) Add new user \\n 2) Return back \\n 3) Exit");
 						choice = in.nextInt();
 						if(choice==1) continue addStudent;
 						if(choice==2) continue menu;
@@ -69,7 +110,29 @@ public class Admin extends User{
 						break;
 					}
 				}
-				else if (choice==2){
+				else if(choice==2){
+					removeUser: while(true){
+						removeUser();
+						System.out.println("\n 1) Remove user \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue removeUser;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				if(choice==3){
+					updateUser: while(true){
+						updateUser();
+						System.out.println("\n 1) Add new user \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue updateUser;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if (choice==5){
 						exit();
 						break menu;
 					}
@@ -99,28 +162,8 @@ public class Admin extends User{
 
 
 
-//    public boolean removeUser(User user) {
-//        // Remove the user if it exists
-//        if (users.contains(user)) {
-//            users.remove(user);
-//            return true;
-//        } else {
-//            System.out.println("User not found.");
-//            return false;
-//        }
-//    }
 
-//    public boolean updateUser(User oldUser, User newUser) {
-//        // Update the user if it exists
-//        if (users.contains(oldUser)) {
-//            int index = users.indexOf(oldUser);
-//            users.set(index, newUser);
-//            return true;
-//        } else {
-//            System.out.println("User not found.");
-//            return false;
-//        }
-//    }
+
     
 //    public boolean equals(Object obj) {
 //        if (this == obj) return true;
