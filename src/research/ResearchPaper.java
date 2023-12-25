@@ -1,12 +1,21 @@
 package research;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fromUser.Admin;
 import fromUser.Database;
-import intranetIn5min.src.Data;
+import fromUser.User;
+import student.Student;
+import teacher.Teacher;
 
-public class ResearchPaper {
+public class ResearchPaper implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	Scanner in = new Scanner(System.in);
 
     private String title;
@@ -20,8 +29,11 @@ public class ResearchPaper {
     private String isbn;
     private String doi;
 
-    private Vector<String> feedbacks;
+    private transient Vector<String> feedbacks;
 
+    public ResearchPaper() {
+    	
+    }
     
     public ResearchPaper(String title, String annotation, Vector<String> keywords, String section, String content,
 			Integer pages, String isbn, String doi) {
@@ -182,19 +194,19 @@ public class ResearchPaper {
 
     public void writeFeedback() {
     	System.out.println("Enter feedback: ");
-    	String fb = in.nextLine();
+    	String fb = in.next();
         this.feedbacks.add(fb);
         System.out.println("Feedback added!");
     }
 
 	private void readPaper(ResearchPaper paper) {
 	    System.out.println("Title: " + paper.getTitle());
-	    System.out.println("Authors: " + paper.getAuthor().stream().map(Researcher::getName).collect(Collectors.joining(", ")));
+//	    System.out.println("Authors: " + paper.getAuthor().stream().map(Researcher::getName).collect(Collectors.joining(", ")));
 	    System.out.println("Section: " + paper.getSection());
 	    System.out.println("Date: " + paper.getDate());
 	    System.out.println("Pages: " + paper.getPages());
-	    System.out.println("Content: " + paper.getContent());
-	    System.out.println("Keywords: " + paper.getKeywords().stream().collect(Collectors.joining(", ")));
+//	    System.out.println("Content: " + paper.getContent());
+//	    System.out.println("Keywords: " + paper.getKeywords().stream().collect(Collectors.joining(", ")));
 	    System.out.println("ISBN: " + paper.getISBN());
 	    System.out.println("DOI: " + paper.getDOI());
 	}		
@@ -215,14 +227,14 @@ public class ResearchPaper {
 		}
 	}
 	
-	public boolean runRPaper(ResearchPaper paper) throws IOException {
+	public boolean runRPaper() throws IOException {
 		try {
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
 				System.out.println("What do you want to do?\n1) Read this paper  2) Get citation  3) Search related papers  4) Write feedback  5) Exit RPaperMenu  6)Exit");
 				int choice = in.nextInt();
 				read: if(choice==1) {
-					readPaper(paper);
+					readPaper(this);
 					System.out.println("\n1) Get citation  2) Search related papers  4) Write feedback  5) Return back");
 					choice = in.nextInt();
 					if(choice==1) break read;
@@ -240,7 +252,7 @@ public class ResearchPaper {
 					System.out.println("\nReturning back...\n\n");
 					continue menu;
 				}if(choice==5) {
-					return true;
+					return false;
 				}if(choice==6) {
 					exit();
 					break menu;
@@ -251,6 +263,23 @@ public class ResearchPaper {
 			e.printStackTrace();
 			save();
 		}
-		return false;
+		return true;
+	}
+	
+	
+	public static void main(String[] args){
+    	ResearchPaper p = new ResearchPaper(null, null, null, null, null, null, null, null);
+
+		
+    	try {
+    		Researcher r = new Researcher(new Teacher("P"));
+    		p.runRPaper();
+    	
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	p.feedbacks.stream().forEach(System.out::println);
+
 	}
 }

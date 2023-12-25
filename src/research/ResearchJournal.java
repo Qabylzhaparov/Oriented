@@ -1,12 +1,17 @@
 package research;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import fromUser.Database;
 import fromUser.User;
 
-public class ResearchJournal {
+public class ResearchJournal implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Scanner in = new Scanner(System.in);
 	public ResearchJournal() {}
 	
@@ -121,14 +126,14 @@ public class ResearchJournal {
 		}
 	}
 	
-	public boolean runRPaper(ResearchJournal j, Researcher r) throws IOException {
+	public boolean runRJournal(Researcher r) throws IOException {
 		try {
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
 				System.out.println("What do you want to do?\n1) View Journal  2) Subscribe/Unsubscribe  3) Rate  4) Submit paper  5) Exit Journal Menu  6)Exit");
 				int choice = in.nextInt();
 				if(choice==1) {
-					viewInfo(j);
+					viewInfo(this);
 				}
 				if(choice==2) {
 					un_subscribe(r);
@@ -140,7 +145,7 @@ public class ResearchJournal {
 					submitPaper(r);
 				}
 				if(choice==5) {
-					return true;
+					return false;
 				}
 				if(choice==6) {
 					exit(); break menu;
@@ -152,7 +157,7 @@ public class ResearchJournal {
 			e.printStackTrace();
 			save();
 		}
-		return false;
+		return true;
 	}
 
 	public void viewInfo(ResearchJournal journal) {

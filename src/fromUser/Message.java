@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import teacher.Teacher;
+
 public class Message{
 	private List<String> messageHistory;     /// eto dolzho byt' v DB
 	private Integer ID;
@@ -37,6 +39,8 @@ public class Message{
 		Status = status;
 		UrgencyLevel = urgencyLevel;
 	}
+
+
 
 	public boolean addMessage(Message m) {
     	messageHistory.addAll(messageHistory);         /// v DB dolzhen hranit'

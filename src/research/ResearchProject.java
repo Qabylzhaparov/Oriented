@@ -1,23 +1,48 @@
 package research;
 import java.io.IOException;
+import java.io.EOFException;
+import java.io.Serializable;
 import java.util.*;
 
-import fromUser.Database;
 
-public class ResearchProject {
-    Scanner in = new Scanner(System.in);
+public class ResearchProject implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	Scanner in = new Scanner(System.in);
 	
     private String title;
-    private boolean isFinished = false;
     private Vector<String> objectives;
     private Vector<Researcher> participants;
     private String section;
-    private Map<String, Boolean> stages;
+    private Vector<String> stages;
     private Date startDate;
     private Date endDate;
     private String review;
     
-    public String getTitle() {
+    {
+    	participants = new Vector<>();
+    }
+    
+    public ResearchProject() {
+    	
+    }
+    
+    public ResearchProject(String title, Vector<String> objectives, String section,
+			Vector<String> stages, Date endDate) {
+		super();
+		this.title = title;
+		this.objectives = objectives;
+		this.section = section;
+		this.stages = stages;
+		this.startDate = new Date();
+		this.endDate = endDate;
+		this.review = "no review";
+	}
+
+	public String getTitle() {
         return this.title;
     }
     
@@ -49,16 +74,12 @@ public class ResearchProject {
         this.section = section;
     }
     
-    public Map<String, Boolean> getStages() {
+    public Vector<String> getStages() {
         return this.stages;
     }
     
     public void setStages(Vector<String> stages) {
-        Map<String, Boolean> map = new HashMap<>();
-        for(String stage : stages) {
-            map.put(stage, false);
-        }
-        this.stages = map;
+       this.stages = stages;
     }
     
     public Date getStartDate() {
@@ -81,14 +102,16 @@ public class ResearchProject {
     	StringBuilder result = new StringBuilder();
         for (int i = 0; i < this.review.length(); i++) {
             result.append(review.charAt(i));
-            if (i % 50 == 0) {
+            if (i != 0 &&i % 50 == 0) {
                 result.append("\n");
             }
         }
         return result.toString();    
     }
     
-    public void setReview(String review) {
+    public void setReview() {
+    	System.out.print("Enter review: ");
+    	String review = in.next();
         this.review = review;
     }
     
@@ -96,11 +119,7 @@ public class ResearchProject {
     // Operations 
     
 
-    
-    public boolean isFinished() {
-        return isFinished;
-    }
-    
+   
     
 
     
@@ -113,7 +132,7 @@ public class ResearchProject {
     
 
     private void save() throws IOException{
-    	Database.write();
+    	ResearchDatabase.write();
     }
     
     private void exit() {
@@ -126,17 +145,18 @@ public class ResearchProject {
     }
     
     
-    public boolean runRProject(ResearchProject project) throws IOException{
+    public boolean runRProject() throws IOException, EOFException{
     	try {
-    		System.out.println("Welcome!");
+    		System.out.println("\nWelcome Research Project Menu!");
     		menu: while(true) {
-    			System.out.println("What do you want to do?\n 1) View project  2) Add researcher  3) Publish project  4) Exit RPaperMenu  5) Exit");
+    			System.out.println("What do you want to do?\n1) View projects  2) Add researcher  3) Publish project  4) Exit RPaperMenu  5) Exit");
     			int choice = in.nextInt();
     			if(choice==1) {
     				viewProject();
-    				System.out.println("1) Return back");
+    				System.out.println("\n1) Enter review  2) Return back");
     				choice = in.nextInt();
-    				continue menu;
+    				if(choice==1) setReview();
+    				if(choice==2) continue menu;
     			}
     			if(choice==2) {
     				addResearcher();
@@ -151,7 +171,7 @@ public class ResearchProject {
     				continue menu;
     			}
     			if(choice==4) {
-    				return true;
+    				return false;
     			}
     			if(choice==5) {
     				exit();
@@ -163,76 +183,93 @@ public class ResearchProject {
 			e.printStackTrace();
 			save();
 		}
-    	return false;
+    	return true;
     }
 
     private void viewProject() {
-        System.out.println("Project Title: " + this.title);
-        System.out.println("Section: " + this.section);
-        System.out.println("Start Date: " + this.startDate);
-        System.out.println("End Date: " + this.endDate);
-        System.out.println("Project Objectives:");
+        System.out.println("PROJECT TITLE: " + this.title);
+        System.out.println("SECTION: " + this.section);
+        System.out.println("START DATE: " + this.startDate);
+        System.out.println("END DATE: " + this.endDate);
+        System.out.println("OBJECTIVES:");
         for (String objective : this.objectives) {
-            System.out.println("- " + objective);
+            System.out.println("   - " + objective);
         }
-        System.out.println("Participants:");
+        System.out.println("PARTICIPANTS:");
         for (Researcher participant : this.participants) {
-            System.out.println("- " + participant.getName() + " " + participant.getSurname());
+            System.out.println("    - " + participant.getName() + " " + participant.getSurname());
         }
-        System.out.println("Project Stages:");
-        for (Map.Entry<String, Boolean> entry : this.stages.entrySet()) {
-            System.out.println("- " + entry.getKey() + ": " + (entry.getValue() ? "Completed" : "Not Completed"));
+        System.out.println("STAGES:");
+        for (String stage:stages) {
+        	System.out.println("    - " + stage);
         }
-        System.out.println("Review: " + getReview());
-        System.out.println("Status: " + (this.isFinished ? "Finished" : "Not Finished"));
+        
+        System.out.println("REVIEW: " + getReview());
     }
 
     public void addResearcher() {
-    	System.out.println("Choose researcher: ");
-    	for(Researcher r: Database.getResearcher()) {
-    		System.out.println(r.getId() + "  " + r.getName() + "  " + r.getSurname());
+    	if(!ResearchDatabase.getResearchers().isEmpty()) {
+    		System.out.println("Choose researcher: ");
+        	for(Researcher r: ResearchDatabase.getResearchers()) {
+        		System.out.println(r.getID() + "  " + r.getName() + "  " + r.getSurname());
+        	}
+        	String choice = in.next();
+        	Researcher r = ResearchDatabase.getResearcher(choice);
+        	if(r!=null) {
+        		participants.add(r);
+        		System.out.println("Researcher " + r.getID() + " added!");        		
+        	} else {
+        		System.out.println("Not found such researcher");
+        	}
+    	} else {
+    		System.out.println("There is no researchers");
     	}
-    	int choice = in.nextInt();
-    	Researcher r = Database.getResearcher(choice);
-    	participants.add(r);
-    	System.out.println("Researcher " + r.getId() + " added!");
+    	
     }
     
     public void submitProject() {
         System.out.println("Enter Research Paper details:");
 
         System.out.print("Title: ");
-        String paperTitle = in.nextLine();
+        String paperTitle = in.next();
 
         System.out.print("Annotation: ");
-        String paperAnnotation = in.nextLine();
+        String paperAnnotation = in.next();
 
         System.out.print("Keywords (comma-separated): ");
         String[] keywordsArray = in.nextLine().split(",");
         Vector<String> paperKeywords = new Vector<>(Arrays.asList(keywordsArray));
 
         System.out.print("Section: ");
-        String paperSection = in.nextLine();
+        String paperSection = in.next();
 
         System.out.print("Content: ");
-        String paperContent = in.nextLine();
+        String paperContent = in.next();
 
         System.out.print("Number of Pages: ");
         int paperPages = in.nextInt();
         in.nextLine(); // consume the newline character
 
         System.out.print("ISBN: ");
-        String paperISBN = in.nextLine();
+        String paperISBN = in.next();
 
         System.out.print("DOI: ");
-        String paperDOI = in.nextLine();
+        String paperDOI = in.next();
 
         ResearchPaper newPaper = new ResearchPaper(paperTitle, paperAnnotation, paperKeywords, paperSection,
                 paperContent, paperPages, paperISBN, paperDOI);
 
-        Database.addResearchPaper(newPaper);
+        System.out.println("\nResearch paper created!");
+        ResearchDatabase.addResearchPaper(newPaper);
 
-        this.isFinished = true;
     }
+
+	public void addResearcher(Researcher researcher) {
+		participants.add(researcher);
+	}
+
+
+    
+    
 
 }

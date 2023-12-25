@@ -10,7 +10,12 @@ import manager.SchoolType;
 import student.*;
 
 public class Teacher extends Employee {
-    Scanner in = new Scanner(System.in);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	Scanner in = new Scanner(System.in);
 
 	public Teacher() {
 		super();
