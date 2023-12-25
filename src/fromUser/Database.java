@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import manager.News;
 import research.ResearchJournal;
@@ -19,65 +20,36 @@ import fromUser.*;
 
 
 public class Database implements Serializable {
-    /**
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8417587056491157272L;
+	private static final long serialVersionUID = 6210088069147397395L;
+	private static Vector<Message> Messages = new Vector<>();
+	private static Map<Integer, Course> allcourses = new HashMap<>();
+	private static Vector<Student> allstudents = new Vector<>();
+	private Vector<GraduateStudent> AllstudentMaster = new Vector<>();
 
-	private static Vector <Message> Messages;
-    private static Map <Integer, Course> allcourses;   /// id, course
-    private static Vector<Student> allstudents;
-    private Vector <GraduateStudent> AllstudentMaster;
-    ArrayList<User> users;
-//    private List <User> users;
-    private static Set<ResearchPaper> researchPapers;	
-    private Vector<News> news;
-    
-    private static Vector<String> strategicGoals;
-	private static Set<ResearchJournal> journals;
-	private static Vector<Researcher> researchers;
+	private static Set<ResearchPaper> researchPapers = new HashSet<>();
+	private Vector<News> news = new Vector<>();
+	private static Vector<String> strategicGoals = new Vector<>();
+	private static Set<ResearchJournal> journals = new HashSet<>();
+	private static Vector<Researcher> researchers = new Vector<>();
 
-	public static Database INSTANCE;
-    static {
-        INSTANCE = new Database();
-        try {
-            read();
-            System.out.println("Database instance initialized successfully.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-     private Database() {
+    static Database INSTANCE;
+    private static ArrayList<User> users;
+
+    private Database() {
         this.users = new ArrayList<>();
     }
 
-    
-     public static void read() {
-    	    File file = new File("SystemDatabase");
+    public static Database getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Database();
+        }
+        return INSTANCE;
+    }
 
-    	    if (file.exists()) {
-    	        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-    	            INSTANCE = (Database) ois.readObject();
-    	        } catch (IOException | ClassNotFoundException e) {
-    	            e.printStackTrace();
-    	        }
-    	    } else {
-    	        // Handle the case where the file does not exist
-    	        System.out.println("The file 'SystemDatabase' does not exist.");
-    	        // You might want to initialize a new instance or take appropriate action here
-    	        INSTANCE = new Database();
-    	    }
-    	}
-
-     public static void write() {
-         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("SystemDatabase"))) {
-             oos.writeObject(INSTANCE);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-     }
-   
     public void addUser(User user) {
         users.add(user);
     }
@@ -85,10 +57,38 @@ public class Database implements Serializable {
     public ArrayList<User> getUserList() {
         return users;
     }
-	public static int nextId() {
-		// TODO Auto-generated method stub
-		return  INSTANCE.users.size()+1;
-	}
+
+    
+    public static void write() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Database"))) {
+            oos.writeObject(users);
+            System.out.println("Database written successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }   
+    public static void read() {
+    	File file = new File("Database");
+    	if (file.exists()) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+        	users = (ArrayList<User>) ois.readObject();
+            System.out.println("Database read successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }else {
+        users = new ArrayList<>();
+    }}
+
+ 
+
+//    public List<User> getUserList() {
+//    	return this.users.stream().filter(u->u instanceof User).map(u->(User)u).collect(Collectors.toList());
+//    	}
+//	public static int nextId() {
+//		// TODO Auto-generated method stub
+//		return  INSTANCE.users.size()+1;
+//	}
 	
     public Vector <Message> getMessages() {
         return this.Messages;

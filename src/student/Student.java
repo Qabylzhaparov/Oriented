@@ -16,6 +16,16 @@ public class Student extends User {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Student(String email, String password, UserType userType) {
+		// Админға керек /Нурик
+		this.email = email;
+		this.password = password;
+	}
+
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private Date dateOfBirth;
     
     private List<Mark> marks;
