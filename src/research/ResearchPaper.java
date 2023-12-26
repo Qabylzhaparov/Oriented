@@ -60,9 +60,11 @@ public class ResearchPaper implements Serializable{
     }
 
     public Set<Researcher> getAuthor() {
-        return Database.getResearcher().stream().
-				           filter(n->n.getPapers().contains(this)).
-				           collect(Collectors.toSet());
+		return null;
+//        return Database.getResearcher().stream().
+//				           filter(n->n.getPapers().contains(this)).
+//				           collect(Collectors.toSet());
+     
     }
 
     public Integer getCitations() {
@@ -153,9 +155,10 @@ public class ResearchPaper implements Serializable{
 	}
 	
 	public Set<Researcher> getResearcher() {
-		return Database.getResearcher().stream().
-                filter(n->n.getPapers().contains(this))
-                .collect(Collectors.toSet());	}
+//		return Database.getResearcher().stream().
+//                filter(n->n.getPapers().contains(this))
+//                .collect(Collectors.toSet());
+		return null;}
 
 	public Set<ResearchJournal> getResearchJournal() {
 		return Database.getResearchJournal().stream().
@@ -187,9 +190,9 @@ public class ResearchPaper implements Serializable{
     }
 
     public void searchRelatedPapers() {
-        Database.getResearchPapers().stream().
-        		filter(paper -> paper.getKeywords().stream().anyMatch(this.keywords::contains))
-                .forEach(System.out::println);;
+//        Database.getResearchPapers().stream().
+//        		filter(paper -> paper.getKeywords().stream().anyMatch(this.keywords::contains))
+//                .forEach(System.out::println);;
     }
 
     public void writeFeedback() {

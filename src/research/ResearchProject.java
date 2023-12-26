@@ -4,6 +4,8 @@ import java.io.EOFException;
 import java.io.Serializable;
 import java.util.*;
 
+import fromUser.Database;
+
 
 public class ResearchProject implements Serializable {
     /**
@@ -11,7 +13,7 @@ public class ResearchProject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Scanner in = new Scanner(System.in);
+    private transient Scanner in;
 	
     private String title;
     private Vector<String> objectives;
@@ -114,39 +116,27 @@ public class ResearchProject implements Serializable {
     	String review = in.next();
         this.review = review;
     }
-    
 
-    // Operations 
-    
-
-   
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-
-    private void save() throws IOException{
-    	ResearchDatabase.write();
+    private void initScanner() {
+        this.in = new Scanner(System.in);
     }
-    
-    private void exit() {
-    	System.out.println("Session ended.");
-    	try {
-    		save();
-    	} catch(IOException e) {
-    		e.printStackTrace();
-    	}
-    }
+
+	private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     
     
     public boolean runRProject() throws IOException, EOFException{
     	try {
+        	initScanner();
     		System.out.println("\nWelcome Research Project Menu!");
     		menu: while(true) {
     			System.out.println("What do you want to do?\n1) View projects  2) Add researcher  3) Publish project  4) Exit RPaperMenu  5) Exit");
@@ -208,19 +198,19 @@ public class ResearchProject implements Serializable {
     }
 
     public void addResearcher() {
-    	if(!ResearchDatabase.getResearchers().isEmpty()) {
+    	if(!Database.getResearchers().isEmpty()) {
     		System.out.println("Choose researcher: ");
-        	for(Researcher r: ResearchDatabase.getResearchers()) {
-        		System.out.println(r.getID() + "  " + r.getName() + "  " + r.getSurname());
-        	}
-        	String choice = in.next();
-        	Researcher r = ResearchDatabase.getResearcher(choice);
-        	if(r!=null) {
-        		participants.add(r);
-        		System.out.println("Researcher " + r.getID() + " added!");        		
-        	} else {
-        		System.out.println("Not found such researcher");
-        	}
+//        	for(Researcher r: Database.getResearchers()) {
+//        		System.out.println(r.getID() + "  " + r.getName() + "  " + r.getSurname());
+//        	}
+//        	String choice = in.next();
+//        	Researcher r = Database.getResearcher(choice);
+//        	if(r!=null) {
+//        		participants.add(r);
+//        		System.out.println("Researcher " + r.getID() + " added!");        		
+//        	} else {
+//        		System.out.println("Not found such researcher");
+//        	}
     	} else {
     		System.out.println("There is no researchers");
     	}
@@ -260,7 +250,7 @@ public class ResearchProject implements Serializable {
                 paperContent, paperPages, paperISBN, paperDOI);
 
         System.out.println("\nResearch paper created!");
-        ResearchDatabase.addResearchPaper(newPaper);
+        Database.addResearchPaper(newPaper);
 
     }
 

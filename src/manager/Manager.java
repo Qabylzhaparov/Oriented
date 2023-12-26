@@ -1,127 +1,229 @@
 package manager;
 
+import java.io.IOException;
 import java.util.*;
-
 import fromEmployee.Employee;
-import fromUser.UserType;
-import research.ResearchPaper;
-import student.*;
+
+import student.Student;
 import teacher.Teacher;
+import student.Course;
 
-    public class Manager extends Employee {
+import fromUser.Database;
+import fromUser.Message;
+import fromUser.MessageType;
+import fromUser.UserType;
 
-        /// emp cons
-        
-        /// cons with just name
-
-        
-    	
-    	
-    	
-    	
-    	
-    	
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 5823056758898745893L;
-		public Manager(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
-				String Password, int PhoneNumber, double salary, Date hireDate) {
-			super(UserType, ID, FirstName, LastName, Email, Password, PhoneNumber, salary, hireDate);
-			// TODO Auto-generated constructor stub
-		}
-/// it needs for Admin class (Nurikkkk
-		public Manager(String email, String password, UserType userType) {
-			// TODO Auto-generated constructor stub
-		}
-
-		private List<Course> courses = new ArrayList<>();                          ///
-        private List<Teacher> teachers = new ArrayList<>();                        ///
-        private List<Student> students = new ArrayList<>();                        /// VSE DOLZHNO HRANITCA V DB
-        private List<Request> requests = new ArrayList<>();                        ///
-
-        // Constructor, getters, setters, and other methods specific to Manager
-
-        
-        
-//    	
-        
-        Login Manager
-        ManageNews
-        1.
-        2.
-        3.
-        4.
-        1. Add news  
-        2. Remove news
-        enter: id : 3
-       
-        RemoveNews(3) {
-        	
-        }
-        
-        1. Add news
-        Choose category: 1
-        1.Res
-        2.Study
-        3.Social
-        Category cat = Category.get(sc.getInt());
-        
-        Enter headline: ladjaldka;dk;akd
-        String hl = sc.nextline();
-        
-        Enter topic: akd;akdka;dka;ldk
-        String tp = sc.nextLIne()
-        
-        News news1 = new News(hd, tp, cat);
-        DB.addNews()
-        
-        
+public class Manager extends Employee{
 
 
-        public void infoStudent(Student student) {
-            // Implementation to display information about a student
-            System.out.println("Student Information: " + student);
-        }
+    private transient Scanner in;
+    
+    private void initScanner() {
+        this.in = new Scanner(System.in);
+    }
 
-        public void infoTeacher(Teacher teacher) {
-            // Implementation to display information about a teacher
-            System.out.println("Teacher Information: " + teacher);
-        }
+    public Manager(String email, String password, UserType userType) {
+		super(email, password, userType);
+		// TODO Auto-generated constructor stub
+	}
 
 
-        // Method to announce a research paper
-        public void announceResearchPaper(ResearchPaper paper) {       
-        	News n = new News("RP announced", paper.getAnnotation(), Category.RESEARCHER)
-        	DB.addNews(n);
-        }
+	public Manager(UserType userType, String ID, String firstName, String lastName, String email, String password,
+			int phoneNumber) {
+		super(userType, ID, firstName, lastName, email, password, phoneNumber);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Manager() {
+ 
+    }
     
 
-    
-	    public void viewRequests() {                           /// prosto DB.getRequests() (Receiver = Manager)
-	    	DB.getRequests() (Receiver = Manager)
+    public void viewStudents() {
+//        students.sort(Comparator.comparing(Student::getYearOfStudy)
+//                                 .thenComparing(Student::getSchool));
+//        students.forEach(System.out::println);
+    }
+
+    public void viewTeachers() {
+//        teachers.sort(Comparator.comparing(Teacher::getSection));
+//        teachers.forEach(System.out::println);
+    }
+
+    public void viewRequests() {
+//        for (Message msg : Database.getMessages()) {
+//            if (msg.getCategory() == MessageType.REQUEST && !msg.isSigned()) {
+//                System.out.println("Request to be sent to Dean: " + msg);
+//            }
+//        }
+    }
+    private void addNews() {
+        try {
+            System.out.println("Choose category: \n1) Research \n2) Study");
+            int catChoice = in.nextInt();
+            in.nextLine(); 
+//            Category category = Category.get(catChoice - 1);
+
+            System.out.println("Enter headline:");
+            String headline = in.nextLine();
+
+            System.out.println("Enter topic:");
+            String topic = in.nextLine();
+
+            
+//            News newsItem = new News(headline, topic, category);
+//
+//            
+//            Database.getInstance().getNews().add(newsItem);
+
+//            Database.write();
+
+            System.out.println("News added successfully.");
+        } catch (Exception e) {
+            System.out.println("An error occurred while adding news: " + e.getMessage());
+        }
+    }
+
+    private void removeNews() {
+        try {
+            System.out.println("Enter the ID of the news to remove:");
+            int id = in.nextInt();
+//            Database.getInstance().getNews().removeIf(newsItem -> newsItem.getId() == id);
+            Database.write();
+            System.out.println("News removed successfully.");
+        } catch (Exception e) {
+            System.out.println("An error occurred while removing news: " + e.getMessage());
+        }
+    }
+
+
+	private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+    public void displayMenu() {
+		System.out.println("--------Manage's menu----------------");
+		System.out.println("====================================");
+		System.out.println("*	1) View Students             *");
+		System.out.println("*	2) View Teachers             *");
+		System.out.println("*	3) View and Manage Requests  *");
+		System.out.println("*	4) Add News                  *");
+		System.out.println("*	5) Remove News               *");
+		System.out.println("*	6) Exit                      *");
+		System.out.println("====================================");
+    }
+    public void run() throws IOException {
+		try {
+			initScanner();
+			menu : while(true){
+				displayMenu();
+				int choice = in.nextInt();
+				if(choice==1){
+					viewStudents: while(true){
+						viewStudents();
+						Database.write();
+						System.out.println("\n 1) Add new user \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue viewStudents;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if(choice==2){
+					viewTeachers: while(true){
+						viewTeachers();
+						Database.write();
+						System.out.println("\n 1) Remove user \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue viewTeachers;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if(choice==3){
+					viewRequests: while(true){
+						viewRequests();
+						Database.write();
+						System.out.println("\n 1) Update user \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue viewRequests;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if(choice==4){
+					addNews: while(true){
+						addNews();
+						Database.write();
+						System.out.println("\n 1) Show a users list \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue addNews;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if(choice==5){
+					removeNews: while(true){
+						removeNews();
+						Database.write();
+						System.out.println("\n 1) Show a users list \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue removeNews;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+			
+				else if (choice==6){
+						exit();
+						break menu;
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("Something bad happened... \n Saving resources...");
+				e.printStackTrace();
+				save();
+			}
+		finally {
+			if(in != null) in.close();
+	        // Close the Scanner
+	      
 	    }
-	    
+	}
+				
 
-	    
-	    public void run() {
-	    	
-	    }
-		@Override
-		public void sendMessage() {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void sendOrder() {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void displayMenu() {
-			// TODO Auto-generated method stub
-			
-		}
 
-    
+	@Override
+	public void sendMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void sendOrder() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
 }

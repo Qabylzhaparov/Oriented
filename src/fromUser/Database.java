@@ -11,12 +11,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import fromEmployee.TechSupportSpecialist;
+import manager.Manager;
 import manager.News;
 import research.ResearchJournal;
 import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
 import student.*;
+import teacher.Teacher;
 import fromUser.*;
 
 
@@ -29,17 +31,29 @@ public class Database implements Serializable {
 	/**
 	 * 
 	 */
-//	private static final long serialVersionUID = 6210088069147397395L; old
+
+	//	private static final long serialVersionUID = 6210088069147397395L; old
+	
+	   static Vector<Researcher> researchers = new Vector<Researcher>();
+	    static Set<ResearchProject> projects = new HashSet<ResearchProject>();
+	    static Vector<ResearchPaper> papers = new Vector<ResearchPaper>();
+	    static Set<ResearchJournal> journals = new HashSet<ResearchJournal>();
+
+	
 	private static Vector<Message> Messages = new Vector<>();
 	private static Map<Integer, Course> allcourses = new HashMap<>();
 	private static Vector<Student> allstudents = new Vector<>();
 	private Vector<GraduateStudent> AllstudentMaster = new Vector<>();
 	private static Set<ResearchPaper> researchPapers = new HashSet<>();
-	private Vector<News> news = new Vector<>();
     private static Vector<String> strategicGoals;
-	private static Set<ResearchJournal> journals;
-	private static Vector<Researcher> researchers = new Vector<Researcher>();
 
+    
+    private List<Course> courses = new ArrayList<>();
+    private List<Teacher> teachers = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
+    private List<Manager> requests = new ArrayList<>();
+    private List<News> news = new ArrayList<>();
+    
 	private static ArrayList<TechSupportSpecialist> orders = new ArrayList<>();
 	
 	
@@ -67,7 +81,7 @@ public class Database implements Serializable {
 
     
     public static void write() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Database"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Database12"))) {
             oos.writeObject(users);
             System.out.println("Database written successfully.");
         } catch (IOException e) {
@@ -75,7 +89,7 @@ public class Database implements Serializable {
         }
     }   
     public static void read() {
-    	File file = new File("Database");
+    	File file = new File("Database12");
     	if (file.exists()) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
         	users = (ArrayList<User>) ois.readObject();
@@ -130,9 +144,7 @@ public class Database implements Serializable {
     public static void addResearchProject(ResearchProject researchProject) {
     	
     }
-	public static Set<ResearchPaper> getResearchPapers() {
-		return researchPapers;
-	}
+
 	
 	public static void addMessage(Message m) {
 		// TODO Auto-generated method stub
@@ -185,9 +197,7 @@ public class Database implements Serializable {
 	public static Set<ResearchJournal> getResearchJournal() {
 		return journals;
 	}
-	public static Vector<Researcher> getResearcher() {
-		return researchers;
-	}
+
 	public static void setResearchJournal(Set<ResearchJournal> researchJournal) {
 		Database.journals = researchJournal;
 	}
@@ -198,12 +208,67 @@ public class Database implements Serializable {
 	public static Researcher getResearcher(int id) {
 		return (Researcher) researchers.stream().filter(n->n.getID().equals(id));
 	}
-	public static void addResearchPaper(ResearchPaper newPaper) {
-		researchPapers.add(newPaper);
-	}
-	public static ResearchPaper getResearchPapers(String choice) {
-		return (ResearchPaper) researchPapers.stream()
-						     .filter(n->n.getTitle().equals(choice));
+
+
+	
+	
+	
+	
+	public static void addResearcher(Researcher researcher) {
+        researchers.add(researcher);
+    }
+//
+
+//
+    public static void addResearchPaper(ResearchPaper paper) {
+        papers.add(paper);
+    }
+//
+//    public static void addResearchJournal(ResearchJournal journal) {
+//        journals.add(journal);
+//    }
+//
+//    // Методы для получения элементов из базы данных
+//
+    public static Vector<Researcher> getResearchers() {
+        return researchers;
+    }
+//
+    public static Set<ResearchProject> getResearchProjects(Researcher r) {
+        return projects.stream().
+        		filter(n->n.getParticipants().
+        		contains(r)).collect(Collectors.toSet());
+    }
+//
+    public static Vector<ResearchPaper> getResearchPapers(String choice) {
+        return papers;
+    }
+//
+	  public static Set<ResearchJournal> getResearchJournals() {
+          return journals;
+      }
+
+	  public static Researcher getResearcher(String choice) {
+		    try {
+		        if (researchers != null && !researchers.isEmpty()) {
+		            for (Researcher r : researchers) {
+		                if (r.getID().equals(choice)) {
+		                    return r;
+		                }
+		            }
+		        } else {
+		            System.out.println("Error: The 'researchers' collection is null or empty.");
+		        }
+		    } catch (Exception e) {
+		        System.out.println("Error while searching for a researcher: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		    return null;
+		}
+
+	public Object getNews() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

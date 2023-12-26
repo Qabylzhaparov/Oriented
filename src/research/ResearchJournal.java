@@ -12,7 +12,7 @@ public class ResearchJournal implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Scanner in = new Scanner(System.in);
+	   private transient Scanner in;
 	public ResearchJournal() {}
 	
 	public ResearchJournal(String journalName) {
@@ -77,23 +77,38 @@ public class ResearchJournal implements Serializable {
         this.subscribers = subscribers;
     }
     
+    private void initScanner() {
+        this.in = new Scanner(System.in);
+    }
 
+	private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     // Operations                                  
     
     public void submitPaper(Researcher res) {
+    	initScanner();
         if(editors.contains(res)) {
         	System.out.println("Choose Research Paper title: ");
-        	Database.getResearchPapers().stream().
-							        	map(n->n.getTitle()).
-							        	forEach(System.out::println);
-        	String choice = in.nextLine();
-        	ResearchPaper paper = Database.getResearchPapers(choice);
-        	if(paper!=null) {
-        		researchPapers.add(paper);
-            	System.out.println("Research paper added!");
-        	} else {
-        		System.out.println("Research paper not found!");
-        	}
+//        	Database.getResearchPapers(journalName).stream().
+//							        	map(n->n.getTitle()).
+//							        	forEach(System.out::println);
+//        	String choice = in.nextLine();
+//        	ResearchPaper paper = Database.getResearchPapers(choice);
+//        	if(paper!=null) {
+//        		researchPapers.add(paper);
+//            	System.out.println("Research paper added!");
+//        	} else {
+//        		System.out.println("Research paper not found!");
+//        	}
         	
         } else {
         	System.out.println("You are not editor!");
@@ -114,20 +129,10 @@ public class ResearchJournal implements Serializable {
     
 
     
-    private void save() throws IOException {
-		Database.write();
-	}
-	private void exit() {
-		System.out.println("Bye bye");
-		try {
-			save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public boolean runRJournal(Researcher r) throws IOException {
 		try {
+	    	initScanner();
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
 				System.out.println("What do you want to do?\n1) View Journal  2) Subscribe/Unsubscribe  3) Rate  4) Submit paper  5) Exit Journal Menu  6)Exit");

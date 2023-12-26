@@ -2,8 +2,10 @@ package fromUser;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Scanner;
 
 import fromEmployee.TechSupportSpecialist;
@@ -74,7 +76,7 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
         this.lastName = LastName;
     }
     public String getEmail() {
-        return this.email;
+    	return (email != null) ? email : "";
     }
     public void setEmail(String Email) {
         this.email = Email;
@@ -111,73 +113,48 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
 	    String enteredPassword = in.next();
 
 	    List<User> userList = Database.INSTANCE.getUserList();
+	    Iterator<User> iterator = userList.iterator();
 
-	    for (User user : userList) {
-	        // Check if the user has the same email and password
+	    while (iterator.hasNext()) {
+	        User user = iterator.next();
 	        if (user.getEmail().equals(enteredEmail) && user.getPassword().equals(enteredPassword)) {
 	            System.out.println("Login successful!");
 	            System.out.println("************Welcome to KBTU system***************");
-	            // Perform type-specific actions based on the user type
-	            if (user instanceof Admin) {
+
+	            if (user instanceof Researcher) {
+	                Researcher researcher = (Researcher) user;
+	                researcher.Researcherrun();
+	            }
+	            else if (user instanceof Admin) {
 	            	Admin admin = (Admin) user;
-                    admin.run();}	            
-//                } else if (user instanceof Teacher) {
-//                	 Teacher teacher = (Teacher) user;
-//                     teacher.run();
-//                } else if (user instanceof Student) {
-//                	 Student student = (Student) user;
-//                     student.run();
-                  else if(user instanceof TechSupportSpecialist) {
-                	 TechSupportSpecialist techSupportSpecialist = (TechSupportSpecialist) user;
-                	 techSupportSpecialist.run();
-//                } else if (user instanceof Manager) {
-//               	 	Manager manager = (Manager) user;
-//               	 	manager.run();
-                } 
+	            	admin.run();}
+	            else if (user instanceof Manager) {
+           	 		Manager manager = (Manager) user;
+           	 		manager.run();
+            }
+	            else if (user instanceof Teacher) {
+               	 Teacher teacher = (Teacher) user;
+                    teacher.run();
+               } else if (user instanceof Student) {
+               	 Student student = (Student) user;
+                    student.run();
+               }  else if(user instanceof TechSupportSpecialist) {
+               	 TechSupportSpecialist techSupportSpecialist = (TechSupportSpecialist) user;
+               	 techSupportSpecialist.run();
+               } 
 
 	            return user;
 	        }
 	    }
 
+
 	    System.out.println("Incorrect email or password. Try again!!!.");
 	    return login();
 	}
+	public abstract void run() throws IOException;
     public abstract void displayMenu();
-//	public void run() throws IOException {
-//		try {
-//			System.out.println("Welcome!");
-//			menu : while(true){
-//				System.out.println(" 1) Login \\n 2) Exit");
-//				int choice = in.nextInt();
-//				if(choice==1){
-//					login: while(true){
-//						login();
-//						System.out.println("\n 1) login \\n 2) Return back \\n 3) Exit");
-//						choice = in.nextInt();
-//						if(choice==1) continue login;
-//						if(choice==2) continue menu;
-//						if(choice==3) {exit(); break menu;}
-//						break;
-//					}
-//				}
-//				else if (choice==2){
-//					exit();
-//					break menu;
-//				}
-//			}
-//			}catch (Exception e) {
-//				System.out.println("Something bad happened... \n Saving resources...");
-//				e.printStackTrace();
-//				save();
-//			}
-//		finally {
-//	        // Close the Scanner
-//	        in.close();
-//	    }
-//		}
-	public void closeScanner() {
-        in.close();
-    }
+
+
     
     ///public viewNews()
 

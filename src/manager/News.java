@@ -63,7 +63,11 @@ public class News extends Manager{         /// uberi extends i izmeni constructo
 		// TODO Auto-generated constructor stub
 	}
 
-    public void generateTopCitedNews(Category category) {
+    public News(String headline2, String topic2, Category category2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void generateTopCitedNews(Category category) {
         if (category == Category.SCIENCE) {
             
             System.out.println("Top Cited News generated for the Science category.");
