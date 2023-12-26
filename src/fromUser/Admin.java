@@ -5,11 +5,18 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fromEmployee.TechSupportSpecialist;
+import manager.Manager;
 import student.Student;
+import teacher.Teacher;
 
 
 public class Admin extends User {
-	private static final long serialVersionUID = -5092781539768232544L;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6314193802692272885L;
+	//	private static final long serialVersionUID = -5092781539768232544L; old
     private transient Scanner in;
 
     public Admin(UserType userType, String ID, String firstName, String lastName, String email, String password,
@@ -62,6 +69,15 @@ public class Admin extends User {
                 case STUDENT:
                     newUser = new Student(email, password, userType);
                     break;
+                case TECHSUPPORTSPECIALIST:
+                	newUser = new TechSupportSpecialist(email, password, userType);
+                	break;
+                case TEACHER:
+                	newUser = new Teacher(email, password, userType);
+                	break;
+                case MANAGER:
+                	newUser = new Manager(email, password, userType);
+                	break;
                 // Add cases for other user types as needed
                 default:
                     System.out.println("Unsupported user type.");
@@ -134,14 +150,35 @@ public class Admin extends User {
             System.out.println("User not found.");
         }
     }
+    public void userList() {
+        List<User> userList = Database.INSTANCE.getUserList();
 
-
+        if (userList.isEmpty()) {
+            System.out.println("User list is empty.");
+        } else {
+            System.out.println("User List:");
+            for (User user : userList) {
+                System.out.println("Email: " + user.getEmail() + ", UserType: " + user.getUserType());
+            }
+        }
+    }
+    public void displayMenu() {
+		System.out.println("--------Admin's menu----------------");
+		System.out.println("====================================");
+		System.out.println("*	1) Add new user            *");
+		System.out.println("*	2) Remove user             *");
+		System.out.println("*	3) Update user             *");
+		System.out.println("*	4) Show a list of users    *");
+		System.out.println("*	5) Return back             *");
+		System.out.println("*	6) Exit                    *");
+		System.out.println("====================================");
+    }
 	public void run() throws IOException {
 		try {
-			System.out.println("Welcome!");
 			initScanner();
 			menu : while(true){
-				System.out.println("What do you want to do?\n 1) Add new user \\n 2) Remove user \\n 3) Update user \\n 4) Return back \\n 5) Exit");
+				displayMenu();
+//				System.out.println("What do you want to do?\n 1) Add new user \\n 2) Remove user \\n 3) Update user \\n 4) Show a list of users \\n 5) Return back \\n 6) Exit");
 				int choice = in.nextInt();
 				if(choice==1){
 					addUser: while(true){
@@ -179,7 +216,19 @@ public class Admin extends User {
 						break;
 					}
 				}
-				else if (choice==5){
+				else if(choice==4){
+					userList: while(true){
+						userList();
+						Database.write();
+						System.out.println("\n 1) Show a users list \\n 2) Return back \\n 3) Exit");
+						choice = in.nextInt();
+						if(choice==1) continue userList;
+						if(choice==2) continue menu;
+						if(choice==3) {exit(); break menu;}
+						break;
+					}
+				}
+				else if (choice==6){
 						exit();
 						break menu;
 					}

@@ -6,13 +6,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import fromEmployee.TechSupportSpecialist;
+import manager.Manager;
 import manager.News;
 import research.*;
 import student.Student;
 import teacher.Teacher;
 
 public abstract class User implements Comparable<User>, Cloneable, UserInterface, Serializable {
-    private static final long serialVersionUID = -7529410772627156558L;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3993260915863513245L;
+//    private static final long serialVersionUID = -7529410772627156558L; old
+	
     protected transient static Scanner in = new Scanner(System.in);
     protected UserType userType;
     private String ID;
@@ -109,59 +116,65 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
 	        // Check if the user has the same email and password
 	        if (user.getEmail().equals(enteredEmail) && user.getPassword().equals(enteredPassword)) {
 	            System.out.println("Login successful!");
-
+	            System.out.println("************Welcome to KBTU system***************");
 	            // Perform type-specific actions based on the user type
 	            if (user instanceof Admin) {
 	            	Admin admin = (Admin) user;
-                    admin.run();	            
-                } else if (user instanceof Teacher) {
-                	 Teacher teacher = (Teacher) user;
-                     teacher.run();
-                } else if (user instanceof Student) {
-                	 Student student = (Student) user;
-                     student.run();
-                     } 
+                    admin.run();}	            
+//                } else if (user instanceof Teacher) {
+//                	 Teacher teacher = (Teacher) user;
+//                     teacher.run();
+//                } else if (user instanceof Student) {
+//                	 Student student = (Student) user;
+//                     student.run();
+                  else if(user instanceof TechSupportSpecialist) {
+                	 TechSupportSpecialist techSupportSpecialist = (TechSupportSpecialist) user;
+                	 techSupportSpecialist.run();
+//                } else if (user instanceof Manager) {
+//               	 	Manager manager = (Manager) user;
+//               	 	manager.run();
+                } 
 
 	            return user;
 	        }
 	    }
 
-	    System.out.println("Incorrect email or password. Login failed.");
-	    return null;
+	    System.out.println("Incorrect email or password. Try again!!!.");
+	    return login();
 	}
-    
-	public void run() throws IOException {
-		try {
-			System.out.println("Welcome!");
-			menu : while(true){
-				System.out.println(" 1) Login \\n 2) Exit");
-				int choice = in.nextInt();
-				if(choice==1){
-					login: while(true){
-						login();
-						System.out.println("\n 1) login \\n 2) Return back \\n 3) Exit");
-						choice = in.nextInt();
-						if(choice==1) continue login;
-						if(choice==2) continue menu;
-						if(choice==3) {exit(); break menu;}
-						break;
-					}
-				}
-				else if (choice==2){
-					exit();
-					break menu;
-				}
-			}
-			}catch (Exception e) {
-				System.out.println("Something bad happened... \n Saving resources...");
-				e.printStackTrace();
-				save();
-			}
-		finally {
-	        // Close the Scanner
-	        in.close();
-	    }
-		}
+    public abstract void displayMenu();
+//	public void run() throws IOException {
+//		try {
+//			System.out.println("Welcome!");
+//			menu : while(true){
+//				System.out.println(" 1) Login \\n 2) Exit");
+//				int choice = in.nextInt();
+//				if(choice==1){
+//					login: while(true){
+//						login();
+//						System.out.println("\n 1) login \\n 2) Return back \\n 3) Exit");
+//						choice = in.nextInt();
+//						if(choice==1) continue login;
+//						if(choice==2) continue menu;
+//						if(choice==3) {exit(); break menu;}
+//						break;
+//					}
+//				}
+//				else if (choice==2){
+//					exit();
+//					break menu;
+//				}
+//			}
+//			}catch (Exception e) {
+//				System.out.println("Something bad happened... \n Saving resources...");
+//				e.printStackTrace();
+//				save();
+//			}
+//		finally {
+//	        // Close the Scanner
+//	        in.close();
+//	    }
+//		}
 	public void closeScanner() {
         in.close();
     }

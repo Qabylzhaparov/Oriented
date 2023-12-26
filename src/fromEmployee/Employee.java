@@ -4,31 +4,31 @@ import java.util.Date;
 import java.util.Vector;
 import fromUser.Message;
 import fromUser.User;
-///heyy
-/// hey I'm heres
-/// lez go
-public class Employee extends User {
-	private Vector<Message> receiveMessages;         /// needs to get from DB(delete it)
+import fromUser.UserType;
+
+public abstract class Employee extends User {
     private double salary;
     private Date hireDate;
 	
+    
     public Employee() {
-    	super();
     }
     
-    public Employee(String name) {
-    	super(name);
-    }
-    /// constr with just name
-    
-    public Employee(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
-			String Password, int PhoneNumber, double salary, Date hireDate) {
-		super(UserType, ID, FirstName, LastName, Email, Password, PhoneNumber);
-			this.hireDate = new Date();
-			this.salary = salary;
-    }
-    
-    public Double getSalary() {
+
+    public Employee(String email, String password, UserType userType) {
+		super(email, password, userType);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Employee(UserType userType, String ID, String firstName, String lastName, String email, String password,
+			int phoneNumber) {
+		super(userType, ID, firstName, lastName, email, password, phoneNumber);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Double getSalary() {
         return this.salary;
     }
     public void setSalary(Double Salary) {
@@ -42,15 +42,9 @@ public class Employee extends User {
     }
 
     
-    public void SendMessage(Message message) {  
-    	/// DB.addMessage(message);
-    	/// syso sended
-    }
+    public abstract void sendMessage();
     
-    public void sendOrder(String order) {
-    	/// DB.addOrder(order)
-    }
-    
+    public abstract void sendOrder();
 }
 
 //
