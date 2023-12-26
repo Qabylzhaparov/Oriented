@@ -1,47 +1,57 @@
 package student;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
-/**
- * The class representing a student's transcript that contains information about courses and their corresponding marks.
- */
-public class Transcript {
-    private Map<Course, Mark> marksForCourses ;
 
-    public Transcript() {
-    	marksForCourses = new HashMap<>();
-    }
+public class Transcript implements Serializable {
+
+    // Unique identifier for serialization
+    private static final long serialVersionUID = 1L;
+
+    // Mapping of courses to marks
+    private Map<Course, Mark> marksForCourses;
+
     /**
-     * Gets the courses and marks in the transcript.
+     * Constructs a new Transcript object with an empty mapping of courses to marks.
+     */
+    public Transcript() {
+        marksForCourses = new HashMap<>();
+    }
+
+    /**
+     * Gets the mapping of courses to marks in the transcript.
      *
-     * @return The map of courses and marks.
+     * @return The mapping of courses to marks.
      */
     public Map<Course, Mark> getMarksForCourses() {
-		return marksForCourses;
-	}
-    /**
-     * Sets the map of courses and marks in the transcript.
-     *
-     * @param marksForCourses The map of courses and marks to set.
-     */
-	public void setMarksForCourses(Map<Course, Mark> marksForCourses) {
-		this.marksForCourses = marksForCourses;
-	}
-
-                                  
-	 /**
-     * Generates a string representation of the transcript.
-     *
-     * @return A formatted string representation of the transcript.
-     */
-    public String toString() {
-    	String t = "-".repeat(24);
-    	for (Entry<Course, Mark> entry : marksForCourses.entrySet()) {
-    		t += String.format(entry.getKey().getCourseName() + (20) + "s %d", entry.getKey(), entry.getValue()); 
-    	}
-    	t += "-".repeat(24);
-    	
-    	return t;
+        return marksForCourses;
     }
-    
+
+    /**
+     * Sets the mapping of courses to marks in the transcript.
+     *
+     * @param marksForCourses The mapping of courses to marks to set.
+     */
+    protected void setMarksForCourses(Map<Course, Mark> marksForCourses) {
+        this.marksForCourses = marksForCourses;
+    }
+
+    /**
+     * Returns a string representation of the transcript, including course names and corresponding marks.
+     *
+     * @return A string representation of the transcript.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Transcript:\n");
+        for (Entry<Course, Mark> entry : marksForCourses.entrySet()) {
+            sb.append(entry.getKey().getCourseName())
+              .append(" - Mark: ")
+              .append(entry.getValue().getMarkType())
+              .append("\n");
+        }
+        return sb.toString();
+    }
 }
