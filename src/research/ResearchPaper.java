@@ -19,6 +19,7 @@ public class ResearchPaper implements Serializable{
 	Scanner in = new Scanner(System.in);
 
     private String title;
+    private Researcher author;
     private Integer citations;
     private String annotation;
     private Vector<String> keywords;
@@ -35,10 +36,11 @@ public class ResearchPaper implements Serializable{
     	
     }
     
-    public ResearchPaper(String title, String annotation, Vector<String> keywords, String section, String content,
+    public ResearchPaper(String title, Researcher author, String annotation, Vector<String> keywords, String section, String content,
 			Integer pages, String isbn, String doi) {
 		super();
 		this.title = title;
+		this.author = author;
 		this.citations = 0;
 		this.annotation = annotation;
 		this.keywords = keywords;
@@ -59,10 +61,8 @@ public class ResearchPaper implements Serializable{
         this.title = title;
     }
 
-    public Set<Researcher> getAuthor() {
-        return Database.getResearcher().stream().
-				           filter(n->n.getPapers().contains(this)).
-				           collect(Collectors.toSet());
+    public String getAuthor() {
+    	return author.getName();
     }
 
     public Integer getCitations() {
@@ -101,7 +101,7 @@ public class ResearchPaper implements Serializable{
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < this.content.length(); i++) {
             result.append(content.charAt(i));
-            if (i % 50 == 0) {
+            if (i > 49 && i % 50 == 0) {
                 result.append("\n");
             }
         }
@@ -171,24 +171,23 @@ public class ResearchPaper implements Serializable{
     
     // Operations
 
-    public String getCitation() {
+    public void getCitation() {
     	System.out.println("Choose format: 1) Plain text  2) Bibtex");
     	int choice = in.nextInt();
         if (choice==1) {
         	citations++;
-            return getAuthor() + ", " + getTitle() + ", " + getSection() + ", " + getDate().getYear();
+            System.out.println(getAuthor() + ", " + getTitle() + ", " + getSection() + ", " + getDate().getYear());;
         } else if (choice==2) {
             citations++;
-        	return "@article{author = {" + getAuthor() + "}, title = {" + getTitle() + "}, section = {" + 
-                               getSection() +"}, year = {" + getDate().getYear() + "}}";
-        } 
-        return "Wrong type!";
-        
+        	System.out.println("@article{author = {" + getAuthor() + "}, title = {" + getTitle() + "}, section = {" + 
+                               getSection() +"}, year = {" + getDate().getYear() + "}}");
+        }    
     }
 
     public void searchRelatedPapers() {
-        Database.getResearchPapers().stream().
+        ResearchDatabase.getResearchPapers().stream().
         		filter(paper -> paper.getKeywords().stream().anyMatch(this.keywords::contains))
+        		.map(n->n.getTitle())
                 .forEach(System.out::println);;
     }
 
@@ -201,12 +200,12 @@ public class ResearchPaper implements Serializable{
 
 	private void readPaper(ResearchPaper paper) {
 	    System.out.println("Title: " + paper.getTitle());
-//	    System.out.println("Authors: " + paper.getAuthor().stream().map(Researcher::getName).collect(Collectors.joining(", ")));
+	    System.out.println("Authors: " + paper.getAuthor());
 	    System.out.println("Section: " + paper.getSection());
 	    System.out.println("Date: " + paper.getDate());
 	    System.out.println("Pages: " + paper.getPages());
-//	    System.out.println("Content: " + paper.getContent());
-//	    System.out.println("Keywords: " + paper.getKeywords().stream().collect(Collectors.joining(", ")));
+	    System.out.println("Content: " + paper.getContent());
+	    System.out.println("Keywords: " + paper.getKeywords().stream().collect(Collectors.joining(", ")));
 	    System.out.println("ISBN: " + paper.getISBN());
 	    System.out.println("DOI: " + paper.getDOI());
 	}		
@@ -231,13 +230,16 @@ public class ResearchPaper implements Serializable{
 		try {
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
-				System.out.println("What do you want to do?\n1) Read this paper  2) Get citation  3) Search related papers  4) Write feedback  5) Exit RPaperMenu  6)Exit");
+				System.out.println("What do you want to do?\n1) Read this paper  2) Get citation  3) Search related papers  4) Write feedback  5) Exit RPaperMenu");
 				int choice = in.nextInt();
 				read: if(choice==1) {
 					readPaper(this);
 					System.out.println("\n1) Get citation  2) Search related papers  4) Write feedback  5) Return back");
 					choice = in.nextInt();
-					if(choice==1) break read;
+					if(choice==1) {
+						choice = 2;
+						break read;
+					}
 				}
 				if(choice==2) {
 					getCitation();
@@ -253,9 +255,6 @@ public class ResearchPaper implements Serializable{
 					continue menu;
 				}if(choice==5) {
 					return false;
-				}if(choice==6) {
-					exit();
-					break menu;
 				}
 			}
 		} catch(Exception e) {
@@ -267,19 +266,5 @@ public class ResearchPaper implements Serializable{
 	}
 	
 	
-	public static void main(String[] args){
-    	ResearchPaper p = new ResearchPaper(null, null, null, null, null, null, null, null);
-
-		
-    	try {
-    		Researcher r = new Researcher(new Teacher("P"));
-    		p.runRPaper();
-    	
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	
-    	p.feedbacks.stream().forEach(System.out::println);
-
-	}
+	
 }

@@ -16,9 +16,8 @@ public class Researcher implements UserInterface, Serializable{
 	/**
 	 * 
 	 */
-    Scanner in = new Scanner(System.in);
-    
-    
+	private static final long serialVersionUID = 1L;
+	Scanner in = new Scanner(System.in);
     private UserInterface user;
 
     public Researcher(User user) {
@@ -187,7 +186,7 @@ public class Researcher implements UserInterface, Serializable{
     			System.out.println("\nWhat do you want to do?\n1) Open Paper Menu  2) Open Project Menu  3) Open Journal Menu  4) New Research Project  5) Exit");
     			int choice = in.nextInt();
     			if(choice==1) {
-    				if(!ResearchDatabase.INSTANCE.papers.isEmpty()) {
+    				if(!ResearchDatabase.getResearchPapers().isEmpty()) {
     					System.out.println("Enter Research paper title: ");
     					papers.stream().map(n->n.getTitle()).forEach(System.out::println);  
     					String schoice = in.next();
@@ -206,7 +205,7 @@ public class Researcher implements UserInterface, Serializable{
     				}
     				}
     			if(choice==2) {
-    				if (!ResearchDatabase.INSTANCE.projects.isEmpty()) {
+    				if (!ResearchDatabase.getResearchProjects(this).isEmpty()) {
     			        System.out.println("Enter Research project title: ");
     			        projects.stream().map(n -> n.getTitle()).forEach(System.out::println);
     			        String schoice = in.next();
@@ -216,7 +215,7 @@ public class Researcher implements UserInterface, Serializable{
     			                .orElse(null);
 
     			        if (p != null) {
-    			            while (p.runRProject()) {
+    			            while (p.runRProject(this)) {
     			            }
     			        } else {
     			            System.out.println("Not found!");
@@ -226,14 +225,14 @@ public class Researcher implements UserInterface, Serializable{
     			    }
     			}    			
     			if(choice==3) {
-    				if (!ResearchDatabase.INSTANCE.journals.isEmpty()) {
+    				if (!ResearchDatabase.getResearchJournals().isEmpty()) {
     			        System.out.println("Enter Research journal name: ");
-    			        ResearchDatabase.INSTANCE.journals.stream()
+    			        ResearchDatabase.getResearchJournals().stream()
     			                .map(n -> n.getJournalName())
     			                .forEach(System.out::println);
 
     			        String schoice = in.next();
-    			        ResearchJournal j = ResearchDatabase.INSTANCE.journals.stream()
+    			        ResearchJournal j = ResearchDatabase.getResearchJournals().stream()
     			                .filter(n -> n.getJournalName().equals(schoice))
     			                .findFirst()
     			                .orElse(null);
@@ -263,7 +262,7 @@ public class Researcher implements UserInterface, Serializable{
     		System.out.println("Something went wrong...\n Saving session...");
     		e.printStackTrace();
     		save();
-    	} 
+    	}
     
     
     }
@@ -294,7 +293,7 @@ public class Researcher implements UserInterface, Serializable{
             ResearchProject newProject = new ResearchProject(projectTitle, projectObjectives, projectSection, projectStages, projectEndDate);
             newProject.addResearcher(this);
             
-            ResearchDatabase.INSTANCE.projects.add(newProject);
+            ResearchDatabase.addResearchProject(newProject);
             projects.add(newProject);
             System.out.println("New project created successfully!");
         } catch (Exception e) {
@@ -302,6 +301,10 @@ public class Researcher implements UserInterface, Serializable{
             e.printStackTrace();
         }
     }
+
+	public void addPaper(ResearchPaper p) {
+		papers.add(p);
+	}
 
     
     

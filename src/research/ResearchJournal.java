@@ -25,10 +25,10 @@ public class ResearchJournal implements Serializable {
 	}
     
     private String journalName;
-    private Vector<Researcher> editors;
+    private Vector<Researcher> editors = new Vector<Researcher>();
     private String journalSection;
-    private Vector<ResearchPaper> publishedPapers;
-    private Set<Researcher> subscribers;
+    private Vector<ResearchPaper> publishedPapers = new Vector<ResearchPaper>();
+    private Set<Researcher> subscribers = new HashSet<>();
     private Vector<ResearchPaper> researchPapers;
     private Double journalRateSum = 0.0;
     private Integer journalRateCounter = 0;
@@ -47,6 +47,10 @@ public class ResearchJournal implements Serializable {
     
     public void setEditors(Vector<Researcher> editors) {
         this.editors = editors;
+    }
+    
+    public void addEditor(Researcher researcher) {
+    	this.editors.add(researcher);
     }
     
     public String getJournalSection() {
@@ -80,25 +84,25 @@ public class ResearchJournal implements Serializable {
 
     // Operations                                  
     
-    public void submitPaper(Researcher res) {
-        if(editors.contains(res)) {
-        	System.out.println("Choose Research Paper title: ");
-        	Database.getResearchPapers().stream().
-							        	map(n->n.getTitle()).
-							        	forEach(System.out::println);
-        	String choice = in.nextLine();
-        	ResearchPaper paper = Database.getResearchPapers(choice);
-        	if(paper!=null) {
-        		researchPapers.add(paper);
-            	System.out.println("Research paper added!");
-        	} else {
-        		System.out.println("Research paper not found!");
-        	}
-        	
-        } else {
-        	System.out.println("You are not editor!");
-        }
-    }
+//    public void submitPaper(Researcher res) {
+//        if(editors.contains(res)) {
+//        	System.out.println("Choose Research Paper title: ");
+//        	ResearchDatabase.getResearchPapers().stream().
+//							        	map(n->n.getTitle()).
+//							        	forEach(System.out::println);
+//        	String choice = in.nextLine();
+//        	ResearchPaper paper = ResearchDatabase.getResearchPapers(choice);
+//        	if(paper!=null) {
+//        		researchPapers.add(paper);
+//            	System.out.println("Research paper added!");
+//        	} else {
+//        		System.out.println("Research paper not found!");
+//        	}
+//        	
+//        } else {
+//        	System.out.println("You are not editor!");
+//        }
+//    }
     
     public void rateJournal1to10() {
     	System.out.println("Rate from 1 to 10: ");
@@ -130,7 +134,7 @@ public class ResearchJournal implements Serializable {
 		try {
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
-				System.out.println("What do you want to do?\n1) View Journal  2) Subscribe/Unsubscribe  3) Rate  4) Submit paper  5) Exit Journal Menu  6)Exit");
+				System.out.println("What do you want to do?\n1) View Journal  2) Subscribe/Unsubscribe  3) Rate  4) Exit Journal Menu");
 				int choice = in.nextInt();
 				if(choice==1) {
 					viewInfo(this);
@@ -142,15 +146,8 @@ public class ResearchJournal implements Serializable {
 					rateJournal1to10();
 				}
 				if(choice==4) {
-					submitPaper(r);
-				}
-				if(choice==5) {
 					return false;
 				}
-				if(choice==6) {
-					exit(); break menu;
-				}
-				
 			}
 		} catch(Exception e) {
 			System.out.println("Something went wrong... \n Saving session...");
@@ -172,7 +169,7 @@ public class ResearchJournal implements Serializable {
 	    System.out.println("Published Papers:");
 	    for (ResearchPaper paper : journal.getPublishedPapers()) {
 	        System.out.println("- Title: " + paper.getTitle() + ", Authors: " +
-	                paper.getAuthor().stream().map(Researcher::getName).collect(Collectors.joining(", ")));
+	                paper.getAuthor());
 	    }
 	}
 	

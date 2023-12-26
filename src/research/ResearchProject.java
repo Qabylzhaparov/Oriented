@@ -11,7 +11,7 @@ public class ResearchProject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-    protected transient Scanner in = new Scanner(System.in);
+	Scanner in = new Scanner(System.in);
 	
     private String title;
     private Vector<String> objectives;
@@ -119,6 +119,17 @@ public class ResearchProject implements Serializable {
     // Operations 
     
 
+   
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
 
     private void save() throws IOException{
     	ResearchDatabase.write();
@@ -133,14 +144,10 @@ public class ResearchProject implements Serializable {
     	}
     }
     
-    private void initScanner() {
-    	this.in = new Scanner(System.in);
-    }
     
-    public boolean runRProject() throws IOException, EOFException{
+    public boolean runRProject(Researcher r) throws IOException, EOFException{
     	try {
     		System.out.println("\nWelcome Research Project Menu!");
-    		initScanner();
     		menu: while(true) {
     			System.out.println("What do you want to do?\n1) View projects  2) Add researcher  3) Publish project  4) Exit RPaperMenu");
     			int choice = in.nextInt();
@@ -158,7 +165,7 @@ public class ResearchProject implements Serializable {
     				continue menu;
     			}
     			if(choice==3) {
-    				submitProject();
+    				submitProject(r);
     				System.out.println("1) Return back");
     				choice = in.nextInt();
     				continue menu;
@@ -171,14 +178,11 @@ public class ResearchProject implements Serializable {
 			System.out.println("Something went wrong... \n Saving session...");
 			e.printStackTrace();
 			save();
-		} finally {
-			if(in!= null) in.close();
 		}
     	return true;
     }
 
-
-	private void viewProject() {
+    private void viewProject() {
         System.out.println("PROJECT TITLE: " + this.title);
         System.out.println("SECTION: " + this.section);
         System.out.println("START DATE: " + this.startDate);
@@ -200,15 +204,13 @@ public class ResearchProject implements Serializable {
     }
 
     public void addResearcher() {
-    	if(!ResearchDatabase.INSTANCE.researchers.isEmpty()) {
+    	if(!ResearchDatabase.getResearchers().isEmpty()) {
     		System.out.println("Choose researcher: ");
-        	for(Researcher r: ResearchDatabase.INSTANCE.researchers) {
+        	for(Researcher r: ResearchDatabase.getResearchers()) {
         		System.out.println(r.getID() + "  " + r.getName() + "  " + r.getSurname());
         	}
         	String choice = in.next();
-        	Researcher r = (Researcher) ResearchDatabase.INSTANCE.researchers.stream().
-        									filter(n->n.getID().
-        									equals(choice));
+        	Researcher r = ResearchDatabase.getResearcher(choice);
         	if(r!=null) {
         		participants.add(r);
         		System.out.println("Researcher " + r.getID() + " added!");        		
@@ -221,7 +223,7 @@ public class ResearchProject implements Serializable {
     	
     }
     
-    public void submitProject() {
+    public void submitProject(Researcher r) {
         System.out.println("Enter Research Paper details:");
 
         System.out.print("Title: ");
@@ -250,11 +252,13 @@ public class ResearchProject implements Serializable {
         System.out.print("DOI: ");
         String paperDOI = in.next();
 
-        ResearchPaper newPaper = new ResearchPaper(paperTitle, paperAnnotation, paperKeywords, paperSection,
+        ResearchPaper newPaper = new ResearchPaper(paperTitle, r ,paperAnnotation, paperKeywords, paperSection,
                 paperContent, paperPages, paperISBN, paperDOI);
 
         System.out.println("\nResearch paper created!");
-        ResearchDatabase.INSTANCE.papers.add(newPaper);
+        ResearchDatabase.addResearchPaper(newPaper);
+        r.addPaper(newPaper);
+        
 
     }
 
