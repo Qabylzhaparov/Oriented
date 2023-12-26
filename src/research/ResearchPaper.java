@@ -153,9 +153,10 @@ public class ResearchPaper implements Serializable{
 	}
 	
 	public Set<Researcher> getResearcher() {
-		return Database.getResearcher().stream().
-                filter(n->n.getPapers().contains(this))
-                .collect(Collectors.toSet());	}
+//		return Database.getResearcher().stream().
+//                filter(n->n.getPapers().contains(this))
+//                .collect(Collectors.toSet());
+		return null;}
 
 	public Set<ResearchJournal> getResearchJournal() {
 		return Database.getResearchJournal().stream().

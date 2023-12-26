@@ -16,6 +16,7 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+        	System.out.println("hey");
             Database.write();
         }
     }
@@ -25,6 +26,8 @@ public class Test {
 //
 //import java.io.IOException;
 //
+//import manager.Manager;
+//
 //public class Test {
 //    public static void main(String[] args) {
 //        try {
@@ -33,8 +36,10 @@ public class Test {
 //            Database.read();
 //
 //            // Create an instance of Admin to invoke run()
-//            Admin admin = new Admin();
-//            admin.run();
+//            Manager manager = new Manager();
+//            manager.run();
+////            Admin admin = new Admin();
+////            admin.run();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        } finally {

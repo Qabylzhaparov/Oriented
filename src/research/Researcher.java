@@ -9,16 +9,31 @@ import java.util.stream.IntStream;
 import student.*;
 import teacher.*;
 import fromEmployee.*;
+import fromUser.Database;
 import fromUser.User;
 import fromUser.UserInterface;
+import fromUser.UserType;
 
-public class Researcher implements UserInterface, Serializable{
-	/**
-	 * 
-	 */
+public class Researcher extends User implements UserInterface{
 	private static final long serialVersionUID = 1L;
-	Scanner in = new Scanner(System.in);
+	private String name;
+    private String surname;
+    private String researchArea;
+    private ArrayList<Integer> citations;
+    private Integer yearsOfExperience;
+    private Set<Researcher> collaborators;
+    private Set<ResearchProject> projects;
+    private Vector<ResearchPaper> papers;
     private UserInterface user;
+	
+	
+	private transient Scanner in;
+    private void initScanner() {
+        this.in = new Scanner(System.in);
+    }
+    public Researcher() {
+    	
+    }
 
     public Researcher(User user) {
         if (user instanceof Student || user instanceof Teacher || user instanceof Employee) {
@@ -29,16 +44,15 @@ public class Researcher implements UserInterface, Serializable{
             throw new IllegalArgumentException("Researcher can only be a Student or a Teacher");
         }
     }
-
-    private String name;
-    private String surname;
-    private String researchArea;
-    private ArrayList<Integer> citations;
-    private Integer yearsOfExperience;
-    private Set<Researcher> collaborators;
-    private Set<ResearchProject> projects;
-    private Vector<ResearchPaper> papers;
     
+    public Researcher(String email, String password, UserType userType) {
+    	this.email =email;
+    	this.password = password;
+    	this.userType = userType;
+		// TODO Auto-generated constructor stub
+	}
+
+
     private Vector<String> feedback;
     
     public String getName() {
@@ -151,23 +165,45 @@ public class Researcher implements UserInterface, Serializable{
                     forEach(paper->System.out.println(paper.getTitle() + "-" + paper.getAuthor()));
     }
     
-    private void save() throws IOException{
-    	ResearchDatabase.write();
-    }
-    
-    private void exit() {
-    	try {
-    		save();
-    	} catch(IOException e) {
-    		e.printStackTrace();
-    	}
-    	System.out.println("Session ended.");
-
-    }
-    
-    
+//    private void save() throws IOException{
+//    	ResearchDatabase.write();
+//    }
+//    
+//    private void exit() {
+//    	try {
+//    		save();
+//    	} catch(IOException e) {
+//    		e.printStackTrace();
+//    	}
+//    	System.out.println("Session ended.");
+//
+//    }
+    private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void displayMenu() {
+		System.out.println("--------Researcher's menu----------------");
+		System.out.println("====================================");
+		System.out.println("*	1) Open paper menu            *");
+		System.out.println("*	2) Open project menu            *");
+		System.out.println("*	3) Open Journal menu            *");
+		System.out.println("*	4) New Research Project   *");
+		System.out.println("*	5) Exit             *");
+		System.out.println("*	6) Exit                    *");
+		System.out.println("====================================");		
+		
+	}
     public void run() throws IOException {
     	try{
+			initScanner();
     		System.out.println("1) Enter user mode  2) Enter researcher mode");
     		int choice = in.nextInt();
     		if(choice==1) user.run();
@@ -181,9 +217,10 @@ public class Researcher implements UserInterface, Serializable{
     
     public void Researcherrun() throws IOException{
     	try {
+			initScanner();
     		System.out.println("Welcome!");
     		menu: while(true) {
-    			System.out.println("\nWhat do you want to do?\n1) Open Paper Menu  2) Open Project Menu  3) Open Journal Menu  4) New Research Project  5) Exit");
+    			displayMenu();
     			int choice = in.nextInt();
     			if(choice==1) {
     				if(!ResearchDatabase.getResearchPapers().isEmpty()) {
@@ -269,6 +306,7 @@ public class Researcher implements UserInterface, Serializable{
     
     private void newProject() {
         try {
+			initScanner();
             System.out.println("\nEnter new project details:");
 
             System.out.print("Title: ");

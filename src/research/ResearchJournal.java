@@ -12,7 +12,7 @@ public class ResearchJournal implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Scanner in = new Scanner(System.in);
+	   private transient Scanner in;
 	public ResearchJournal() {}
 	
 	public ResearchJournal(String journalName) {
@@ -81,7 +81,21 @@ public class ResearchJournal implements Serializable {
         this.subscribers = subscribers;
     }
     
+    private void initScanner() {
+        this.in = new Scanner(System.in);
+    }
 
+	private void save() throws IOException {
+		Database.write();
+	}
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     // Operations                                  
     
 //    public void submitPaper(Researcher res) {
@@ -118,20 +132,10 @@ public class ResearchJournal implements Serializable {
     
 
     
-    private void save() throws IOException {
-		Database.write();
-	}
-	private void exit() {
-		System.out.println("Bye bye");
-		try {
-			save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public boolean runRJournal(Researcher r) throws IOException {
 		try {
+	    	initScanner();
 			System.out.println("Welcome to Research Paper Menu!");
 			menu: while(true) {
 				System.out.println("What do you want to do?\n1) View Journal  2) Subscribe/Unsubscribe  3) Rate  4) Exit Journal Menu");

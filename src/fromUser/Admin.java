@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import fromEmployee.TechSupportSpecialist;
 import manager.Manager;
+import research.Researcher;
 import student.Student;
 import teacher.Teacher;
 
@@ -53,18 +54,24 @@ public class Admin extends User {
         String email = in.next();
 
         // Check if the user already exists
-        if (!Database.INSTANCE.getUserList().stream().anyMatch(user -> user instanceof Admin && user.getEmail().equals(email))) {
+        List<User> userList = Database.INSTANCE.getUserList();
+        Optional<User> userOptional = userList.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst();
+        if (!userOptional.isPresent()) {
             System.out.println("Enter new user's password: ");
             String password = in.next();
 
-            System.out.println("Enter new user's UserType (STUDENT, TEACHER, MANAGER, TECHSUPPORTSPECIALIST, ADMIN): ");
+            System.out.println("Enter new user's UserType (STUDENT, TEACHER, MANAGER, TECHSUPPORTSPECIALIST, ADMIN, RESEARCHER): ");
             UserType userType = UserType.valueOf(in.next().toUpperCase());
-
-            // Create an instance of the appropriate subclass based on UserType
             User newUser;
             switch (userType) {
                 case ADMIN:
                     newUser = new Admin(email, password, userType);
+
+                    break;
+                case RESEARCHER:
+                	newUser = new Researcher(email, password, userType);
                     break;
                 case STUDENT:
                     newUser = new Student(email, password, userType);
@@ -98,15 +105,11 @@ public class Admin extends User {
         System.out.println("Enter user's email you want to delete: ");
         String emailToRemove = in.next();
 
-        // Assuming Admin is a concrete subclass of User
         List<User> userList = Database.INSTANCE.getUserList();
 
-        // Use a stream to find the user with the specified email
         Optional<User> userOptional = userList.stream()
-                .filter(user -> user instanceof Admin && user.getEmail().equals(emailToRemove))
+                .filter(user -> user.getEmail().equals(emailToRemove))
                 .findFirst();
-
-        // If the user is found, remove it from the list
         if (userOptional.isPresent()) {
             User userToRemove = userOptional.get();
             userList.remove(userToRemove);
@@ -122,10 +125,8 @@ public class Admin extends User {
         System.out.println("Enter user's email you want to update: ");
         String emailToUpdate = in.next();
 
-        // Assuming Admin is a concrete subclass of User
         List<User> userList = Database.INSTANCE.getUserList();
 
-        // Search for the user based on email
         Optional<User> userOptional = userList.stream()
                 .filter(user -> user.getEmail().equals(emailToUpdate))
                 .findFirst();
