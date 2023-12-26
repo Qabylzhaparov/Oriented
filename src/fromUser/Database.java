@@ -362,6 +362,10 @@ public class Database implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public Transcript getTranscriptForStudent(Student student) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

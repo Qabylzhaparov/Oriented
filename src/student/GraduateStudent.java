@@ -1,22 +1,23 @@
 package student;
 
+import java.util.Date;
+
+import fromUser.UserType;
+import manager.SchoolType;
+
 public class GraduateStudent extends Student {
 
-    private String iD;
+    public GraduateStudent(UserType userType, String iD, String firstName, String lastName, String email,
+			String password, int phoneNumber, Date dateOfBirth, String gender, Integer yearOfStudy, SchoolType school) {
+		super(userType, iD, firstName, lastName, email, password, phoneNumber, dateOfBirth, gender, yearOfStudy, school);
+		// TODO Auto-generated constructor stub
+	}
 
-    private GraduateStudentType  educationDegree;
+	private GraduateStudentType  educationDegree;
 
     private String thesisTitle;
 
     private String degreeField;
-
-    public String getiD() {
-		return iD;
-	}
-
-	public void setiD(String iD) {
-		this.iD = iD;
-	}
 
 	public GraduateStudentType getEducationDegree() {
 		return educationDegree;
