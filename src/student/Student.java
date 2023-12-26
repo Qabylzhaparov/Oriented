@@ -1,5 +1,3 @@
-package student;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,48 +7,227 @@ import java.util.stream.Collectors;
 
 import fromUser.Database;
 import fromUser.User;
-import fromUser.UserType;
+import manager.Course;
 import manager.SchoolType;
 import teacher.Teacher;
 
+/**
+ * The Student class represents a student in an educational institution. It extends the User class
+ * and includes additional attributes such as date of birth, marks, courses, gender, year of study,
+ * school type, advisor, and schedules.
+ *
+
+ */
 public class Student extends User implements Serializable {
 
-    // Unique identifier for serialization
     private static final long serialVersionUID = 1L;
 
-    // Properties of the Student class
-    private Date dateOfBirth;          // The date of birth of the student
-    private List<Mark> marks;          // List of marks for the student
-    private Integer sumOfCredits;      // Sum of credits for the student
-    private List<Course> courses;       // List of courses enrolled by the student
-    private String gender;             // Gender of the student
-    private Integer yearOfStudy;       // Year of study for the student
-    private SchoolType school;         // School type associated with the student
-    private Teacher advisor;           // Advisor assigned to the student
-    private List<Schedule> schedules;   // List of schedules for the student
-    private transient Scanner in;      // Transient Scanner for input operations
+    // Instance variables
+    private Date dateOfBirth;
+    private List<Mark> marks;
+    private Integer sumOfCredits;
+    private List<Course> courses;
+    private String gender;
+    private Integer yearOfStudy;
+    private SchoolType school;
+    private Teacher advisor;
+    private List<Schedule> schedules;
+    private transient Scanner in;  // transient keyword indicates that this field should not be serialized
 
     /**
-     * Initializes the transient Scanner for input operations.
+     * Initializes the Scanner for user input.
      */
     private void initScanner() {
         this.in = new Scanner(System.in);
     }
 
     /**
-     * Constructor for creating a Student object with specified attributes.
+     * Parameterized constructor for the Student class.
      *
-     * @param userType   The type of user (Student).
-     * @param iD         The unique ID of the student.
-     * @param firstName  The first name of the student.
-     * @param lastName   The last name of the student.
-     * @param email      The email address of the student.
-     * @param password   The password for the student's account.
+     * @param email    The email address of the student.
+     * @param password The password for the student's account.
+     * @param userType The type of user, in this case, UserType.STUDENT.
+     */
+    public Student(String email, String password, UserType userType) {
+        super(email, password, userType);
+    }
+
+    /**
+     * Getter for the date of birth.
+     *
+     * @return The date of birth of the student.
+     */
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    /**
+     * Setter for the date of birth.
+     *
+     * @param dateOfBirth The date of birth to set.
+     */
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
+     * Getter for the list of marks.
+     *
+     * @return The list of marks for the student.
+     */
+    public List<Mark> getMarks() {
+        return marks;
+    }
+
+    /**
+     * Setter for the list of marks.
+     *
+     * @param marks The list of marks to set.
+     */
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
+    }
+
+    /**
+     * Getter for the sum of credits.
+     *
+     * @return The sum of credits for the student.
+     */
+    public Integer getSumOfCredits() {
+        return sumOfCredits;
+    }
+
+    /**
+     * Setter for the sum of credits.
+     *
+     * @param sumOfCredits The sum of credits to set.
+     */
+    public void setSumOfCredits(Integer sumOfCredits) {
+        this.sumOfCredits = sumOfCredits;
+    }
+
+    /**
+     * Getter for the list of enrolled courses.
+     *
+     * @return The list of courses the student is enrolled in.
+     */
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    /**
+     * Setter for the list of enrolled courses.
+     *
+     * @param courses The list of courses to set.
+     */
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    /**
+     * Getter for the gender.
+     *
+     * @return The gender of the student.
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * Setter for the gender.
+     *
+     * @param gender The gender to set.
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * Getter for the year of study.
+     *
+     * @return The year of study for the student.
+     */
+    public Integer getYearOfStudy() {
+        return yearOfStudy;
+    }
+
+    /**
+     * Setter for the year of study.
+     *
+     * @param yearOfStudy The year of study to set.
+     */
+    public void setYearOfStudy(Integer yearOfStudy) {
+        this.yearOfStudy = yearOfStudy;
+    }
+
+    /**
+     * Getter for the school type.
+     *
+     * @return The school type of the student.
+     */
+    public SchoolType getSchool() {
+        return school;
+    }
+
+    /**
+     * Setter for the school type.
+     *
+     * @param school The school type to set.
+     */
+    public void setSchool(SchoolType school) {
+        this.school = school;
+    }
+
+    /**
+     * Getter for the advisor.
+     *
+     * @return The advisor for the student.
+     */
+    public Teacher getAdvisor() {
+        return advisor;
+    }
+
+    /**
+     * Setter for the advisor.
+     *
+     * @param advisor The advisor to set.
+     */
+    public void setAdvisor(Teacher advisor) {
+        this.advisor = advisor;
+    }
+
+    /**
+     * Getter for the list of schedules.
+     *
+     * @return The list of schedules for the student.
+     */
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    /**
+     * Setter for the list of schedules.
+     *
+     * @param schedules The list of schedules to set.
+     */
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
+    }
+
+    /**
+     * Parameterized constructor for creating a student with additional attributes.
+     *
+     * @param userType    The type of user, in this case, UserType.STUDENT.
+     * @param iD          The identification number of the student.
+     * @param firstName   The first name of the student.
+     * @param lastName    The last name of the student.
+     * @param email       The email address of the student.
+     * @param password    The password for the student's account.
      * @param phoneNumber The phone number of the student.
      * @param dateOfBirth The date of birth of the student.
      * @param gender      The gender of the student.
      * @param yearOfStudy The year of study for the student.
-     * @param school      The school type associated with the student.
+     * @param school      The school type of the student.
      */
     public Student(UserType userType, String iD, String firstName, String lastName,
                    String email, String password, int phoneNumber,
@@ -63,172 +240,35 @@ public class Student extends User implements Serializable {
     }
 
     /**
-     * Gets the date of birth of the student.
-     *
-     * @return The date of birth.
+     * Displays a list of available courses based on the selected school type
+     * and allows the student to register for a course.
      */
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    /**
-     * Sets the date of birth of the student.
-     *
-     * @param dateOfBirth The date of birth to set.
-     */
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    /**
-     * Gets the list of marks for the student.
-     *
-     * @return The list of marks.
-     */
-    public List<Mark> getMarks() {
-        return marks;
-    }
-
-    /**
-     * Sets the list of marks for the student.
-     *
-     * @param marks The list of marks to set.
-     */
-    public void setMarks(List<Mark> marks) {
-        this.marks = marks;
-    }
-
-    /**
-     * Gets the sum of credits for the student.
-     *
-     * @return The sum of credits.
-     */
-    public Integer getSumOfCredits() {
-        return sumOfCredits;
-    }
-
-    /**
-     * Sets the sum of credits for the student.
-     *
-     * @param sumOfCredits The sum of credits to set.
-     */
-    public void setSumOfCredits(Integer sumOfCredits) {
-        this.sumOfCredits = sumOfCredits;
-    }
-
-    /**
-     * Gets the list of courses enrolled by the student.
-     *
-     * @return The list of courses.
-     */
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    /**
-     * Sets the list of courses enrolled by the student.
-     *
-     * @param courses The list of courses to set.
-     */
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    /**
-     * Gets the gender of the student.
-     *
-     * @return The gender.
-     */
-    public String getGender() {
-        return gender;
-    }
-
-    /**
-     * Sets the gender of the student.
-     *
-     * @param gender The gender to set.
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    /**
-     * Gets the year of study for the student.
-     *
-     * @return The year of study.
-     */
-    public Integer getYearOfStudy() {
-        return yearOfStudy;
-    }
-
-    /**
-     * Sets the year of study for the student.
-     *
-     * @param yearOfStudy The year of study to set.
-     */
-    public void setYearOfStudy(Integer yearOfStudy) {
-        this.yearOfStudy = yearOfStudy;
-    }
-
-    /**
-     * Gets the school type associated with the student.
-     *
-     * @return The school type.
-     */
-    public SchoolType getSchool() {
-        return school;
-    }
-
-    /**
-     * Sets the school type associated with the student.
-     *
-     * @param school The school type to set.
-     */
-    public void setSchool(SchoolType school) {
-        this.school = school;
-    }
-
-    /**
-     * Gets the advisor assigned to the student.
-     *
-     * @return The advisor.
-     */
-    public Teacher getAdvisor() {
-        return advisor;
-    }
-
-    /**
-     * Sets the advisor assigned to the student.
-     *
-     * @param advisor The advisor to set.
-     */
-    public void setAdvisor(Teacher advisor) {
-        this.advisor = advisor;
-    }
-
-    /**
-     * Gets the list of schedules for the student.
-     *
-     * @return The list of schedules.
-     */
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    /**
-     * Sets the list of schedules for the student.
-     *
-     * @param schedules The list of schedules to set.
-     */
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
-    /**
-     * Views and registers for courses through the command-line interface.
-     */
+    
     public void viewAndRegisterCoursesCLI() {
-        // Implementation of the method...
+        System.out.println("Select your school type:");
+        for (SchoolType type : SchoolType.values()) {
+            System.out.println(type);
+        }
+        SchoolType selectedSchoolType = SchoolType.valueOf(scanner.nextLine().toUpperCase());
+
+        System.out.println("Available courses for " + selectedSchoolType + ":");   //по выбранному типу факультета выходят предназначенные только этому факультету курсы
+        List<Course> availableCourses = Database.getInstance().getAllcourses()
+                                     .values().stream()
+                                     .filter(course -> course.getSchool().equals(selectedSchoolType))
+                                     .collect(Collectors.toList());
+
+        availableCourses.forEach(course -> System.out.println(course.getCourseId() + ": " + course.getCourseName()));
+
+        System.out.println("Enter the ID of the course to register:");
+        int courseId = scanner.nextInt();
+        Course selectedCourse = Database.getInstance().getCourseAtID(courseId); //с класса бд (нужно в бд добавить мэпы)
+
+        if (selectedCourse != null) {
+            registerForCourse(selectedCourse);
+            System.out.println("Registered for course: " + selectedCourse.getCourseName());
+        } else {
+            System.out.println("Course not found.");
+        }
     }
 
     /**
@@ -239,62 +279,85 @@ public class Student extends User implements Serializable {
     public void registerForCourse(Course course) {
         courses.add(course);
     }
-
+    
     /**
-     * Views the courses enrolled by the student through the command-line interface.
+     * Displays a list of courses that the student is currently enrolled in.
      */
+    
     public void viewCoursesCLI() {
-        // Implementation of the method...
+        System.out.println("Courses you are enrolled in:");
+        courses.forEach(course -> System.out.println(course.toString()));
     }
-
+    
     /**
-     * Views information about the teacher for a selected course through the command-line interface.
+     * Displays information about the teacher for a selected course.
      */
+    
     public void viewTeacherInformation() {
-        // Implementation of the method...
-    }
-
-    /**
-     * Views the marks of the student through the command-line interface.
-     */
-    public void viewMarks() {
-        // Implementation of the method...
-    }
-
-    /**
-     * Views the transcript of the student through the command-line interface.
-     */
-    public void viewTranscript() {
-        // Implementation of the method...
-    }
-
-    /**
-     * Saves the current state of the database.
-     *
-     * @throws IOException If an I/O error occurs while saving.
-     */
-    private void save() throws IOException {
-        Database.write();
-    }
-
-    /**
-     * Exits the student's session.
-     */
-    private void exit() {
-        System.out.println("Bye bye");
-        try {
-            save();
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Select a course to view its teacher:");
+        for (Course course : courses) {
+            System.out.println(course.getCourseId() + ": " + course.getCourseName());
+        }
+        int courseId = scanner.nextInt();
+        Course selectedCourse = courses.stream()
+            .filter(course -> course.getCourseId() == courseId)
+            .findFirst()
+            .orElse(null);
+        
+        if (selectedCourse != null) {
+            selectedCourse.getInstructors().forEach(teacher -> 
+                System.out.println("Teacher for " + selectedCourse.getCourseName() + ": " + teacher.getName()));
+        } else {
+            System.out.println("Course not found.");
         }
     }
-
-    /**
-     * Displays the menu for the student.
-     */
- 
-
     
+    /**
+    * Displays the marks of the student for each enrolled course.
+    */
+    
+    public void viewMarks() {
+        System.out.println("Your marks:");
+        marks.forEach(mark -> 
+            System.out.println("Course: " + mark.getCourse().getCourseName() + ", Mark: " + mark.getMarkType()));
+    }
+    
+    /**
+     * Displays the transcript of the student, including all courses and marks.
+     */
+    
+    public void viewTranscript() {
+        Transcript transcript = Database.getInstance().getTranscriptForStudent(this); 
+        System.out.println(transcript.toString());
+    }
+    
+    /**
+     * Saves the state of the Database to a file.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
+    
+    private void save() throws IOException {
+		Database.write();
+	}
+    
+    /**
+     * Exits the program and saves the state before closing.
+     */
+    
+	private void exit() {
+		System.out.println("Bye bye");
+		try {
+			save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+     * Displays the menu options for the student.
+     */
+	
 	@Override
     public void displayMenu() {
 		System.out.println("--------Student's menu----------------");
@@ -307,11 +370,13 @@ public class Student extends User implements Serializable {
 		System.out.println("*	6) Exit                      *");
 		System.out.println("====================================");
     }
+	
 	/**
-     * Runs the student's session.
+     * Runs the main logic of the student program, handling user interactions.
      *
      * @throws IOException If an I/O error occurs.
      */
+	
     public void run() throws IOException {
 		try {
 			initScanner();
@@ -395,6 +460,9 @@ public class Student extends User implements Serializable {
 	      
 	    }
 	}
+
+ 
+}
 
  
 }
