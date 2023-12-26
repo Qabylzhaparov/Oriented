@@ -58,5 +58,10 @@ public class Message {
                 .collect(Collectors.toList());
     }
 
+	public int getReceiverId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
   
 }
