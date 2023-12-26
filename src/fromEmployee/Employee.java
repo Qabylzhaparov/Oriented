@@ -14,8 +14,12 @@ public abstract class Employee extends User {
     private double salary;
     private Date hireDate;
 	
-    
     public Employee() {
+    	
+    }
+    
+    public Employee(String name) {
+    	super(name);
     }
     
     /**
