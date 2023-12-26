@@ -177,14 +177,14 @@ public class Database implements Serializable {
 		}
 		return null;
 	}
-	public static int getReceiverId(int id) {
-		for(Message m: Messages) {
-			if(m.getReceiverId()==id) {
-				return m.getReceiverId();
-			}
-		}
-		return -1;
-	}
+//	public static int getReceiverId(int id) {
+//		for(Message m: Messages) {
+//			if(m.getReceiverId()==id) {
+//				return m.getReceiverId();
+//			}
+//		}
+//		return -1;
+//	}
 	public static void addStrategicGoal(String goal) {
 		strategicGoals.add(goal);
 	}
