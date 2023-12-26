@@ -159,8 +159,8 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
     ///public viewNews()
 
     public void commentNews(News news, String comment) {
-         news.addComment(comment);                                  /// navernoe news.addComment(String comment)
-    }                                                                       /// a ne return comment
+         news.addComment(comment);                                  
+    }                                                           
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -174,7 +174,7 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
     }
     @Override
     public String toString() {
-        // Placeholder logic for generating a string representation of the user
+
         return "User{" +
                 "userType=" + userType +
                 ", ID='" + ID + '\'' +
@@ -187,38 +187,16 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
     }
  
 
-
-//    
-//    public boolean equals(Object obj) {
-//        if (this == obj) return true;
-//        if (obj == null || getClass() != obj.getClass()) return false;
-//        User user = (User) obj;
-//        return PhoneNumber == user.PhoneNumber &&
-//                Objects.equals(ID, user.ID) &&
-//                Objects.equals(FirstName, user.FirstName) &&
-//                Objects.equals(LastName, user.LastName) &&
-//                Objects.equals(Email, user.Email) &&
-//                Objects.equals(Password, user.Password);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(ID, FirstName, LastName, Email, Password, PhoneNumber);
-//    }
-
     @Override
     public int compareTo(User otherUser) {
-        // Compare users based on their ID (you can customize this based on your requirements)
         return this.ID.compareTo(otherUser.ID);
     }
 
     @Override
     public User clone() throws CloneNotSupportedException {
         try {
-            // Perform a shallow copy by invoking the Object.clone() method
             return (User) super.clone();
         } catch (CloneNotSupportedException e) {
-            // This should not happen since User implements Cloneable
             throw new InternalError(e);
         }
     }

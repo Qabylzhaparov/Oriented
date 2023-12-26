@@ -140,7 +140,6 @@ public class Admin extends User {
             System.out.println("Enter new password: ");
             String newPassword = in.next();
 
-            // Update the fields of the existing user
             existingUser.setEmail(newEmail);
             existingUser.setPassword(newPassword);
 			Database.write();
@@ -241,7 +240,6 @@ public class Admin extends User {
 			}
 		finally {
 			if(in != null) in.close();
-	        // Close the Scanner
 	      
 	    }
 	}

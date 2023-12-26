@@ -100,16 +100,6 @@ public class Database implements Serializable {
     }else {
         users = new ArrayList<>();
     }}
-
- 
-
-//    public List<User> getUserList() {
-//    	return this.users.stream().filter(u->u instanceof User).map(u->(User)u).collect(Collectors.toList());
-//    	}
-//	public static int nextId() {
-//		// TODO Auto-generated method stub
-//		return  INSTANCE.users.size()+1;
-//	}
 	
     public Vector <Message> getMessages() {
         return this.Messages;
@@ -223,13 +213,7 @@ public class Database implements Serializable {
     public static void addResearchPaper(ResearchPaper paper) {
         papers.add(paper);
     }
-//
-//    public static void addResearchJournal(ResearchJournal journal) {
-//        journals.add(journal);
-//    }
-//
-//    // Методы для получения элементов из базы данных
-//
+
     public static Vector<Researcher> getResearchers() {
         return researchers;
     }

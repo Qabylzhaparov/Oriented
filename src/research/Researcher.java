@@ -214,7 +214,42 @@ public class Researcher extends User implements UserInterface{
 			save();
     	}
     }
-    
+       private void newProject() {
+        try {
+			initScanner();
+            System.out.println("\nEnter new project details:");
+
+            System.out.print("Title: ");
+            String projectTitle = in.next();
+
+            System.out.print("Section: ");
+            String projectSection = in.nextLine();
+
+            System.out.print("Objectives (comma-separated): ");
+            String[] objectivesArray = in.nextLine().split(", ");
+            Vector<String> projectObjectives = new Vector<>(Arrays.asList(objectivesArray));
+
+            System.out.print("Enter project stages (comma-separated): ");
+            String[] stagesArray = in.nextLine().split(", ");
+            Vector<String> projectStages = new Vector<>(Arrays.asList(stagesArray));
+           
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.print("End Date (format: yyyy-MM-dd): ");
+            String endDateString = in.nextLine();
+            Date projectEndDate = dateFormat.parse(endDateString);
+
+            ResearchProject newProject = new ResearchProject(projectTitle, projectObjectives, projectSection, projectStages, projectEndDate);
+            newProject.addResearcher(this);
+            
+            Database.addResearchProject(newProject);
+            projects.add(newProject);
+            Database.write();
+            System.out.println("New project created successfully!");
+        } catch (Exception e) {
+            System.out.println("Error creating new project.");
+            e.printStackTrace();
+        } 
+       }
     public void Researcherrun() throws IOException{
     	try {
 			initScanner();
@@ -304,40 +339,7 @@ public class Researcher extends User implements UserInterface{
     
     }
     
-    private void newProject() {
-        try {
-			initScanner();
-            System.out.println("\nEnter new project details:");
 
-            System.out.print("Title: ");
-            String projectTitle = in.next();
-
-            System.out.print("Section: ");
-            String projectSection = in.nextLine();
-
-            System.out.print("Objectives (comma-separated): ");
-            String[] objectivesArray = in.nextLine().split(", ");
-            Vector<String> projectObjectives = new Vector<>(Arrays.asList(objectivesArray));
-
-            System.out.print("Enter project stages (comma-separated): ");
-            String[] stagesArray = in.nextLine().split(", ");
-            Vector<String> projectStages = new Vector<>(Arrays.asList(stagesArray));
-           
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            System.out.print("End Date (format: yyyy-MM-dd): ");
-            String endDateString = in.nextLine();
-            Date projectEndDate = dateFormat.parse(endDateString);
-
-            ResearchProject newProject = new ResearchProject(projectTitle, projectObjectives, projectSection, projectStages, projectEndDate);
-            newProject.addResearcher(this);
-            
-            Database.addResearchProject(newProject);
-            projects.add(newProject);
-            System.out.println("New project created successfully!");
-        } catch (Exception e) {
-            System.out.println("Error creating new project.");
-            e.printStackTrace();
-        }
     }
 
 
@@ -345,4 +347,4 @@ public class Researcher extends User implements UserInterface{
     
     
     
-}
+
