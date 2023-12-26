@@ -39,6 +39,7 @@ public class Database implements Serializable {
     private static Vector<String> strategicGoals;
 	private static Set<ResearchJournal> journals;
 	private static Vector<Researcher> researchers = new Vector<Researcher>();
+	private Vector<News> news = new Vector<>();
 
 	private static ArrayList<TechSupportSpecialist> orders = new ArrayList<>();
 	
