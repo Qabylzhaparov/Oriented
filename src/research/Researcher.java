@@ -190,14 +190,13 @@ public class Researcher extends User implements UserInterface{
 		}
 	}
 	public void displayMenu() {
-		System.out.println("--------Researcher's menu----------------");
+		System.out.println("--------Researcher's menu-----------");
 		System.out.println("====================================");
-		System.out.println("*	1) Open paper menu            *");
-		System.out.println("*	2) Open project menu            *");
-		System.out.println("*	3) Open Journal menu            *");
-		System.out.println("*	4) New Research Project   *");
-		System.out.println("*	5) Exit             *");
-		System.out.println("*	6) Exit                    *");
+		System.out.println("*	1) Open paper menu             *");
+		System.out.println("*	2) Open project menu           *");
+		System.out.println("*	3) Open Journal menu           *");
+		System.out.println("*	4) New Research Project        *");
+		System.out.println("*	5) Exit                        *");
 		System.out.println("====================================");		
 		
 	}
