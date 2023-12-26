@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
  * The Schedule class represents the academic schedule for a specific term, including courses and lessons.
  * It provides methods for updating lessons and printing the schedule.
  *
- * @author Your Name
- * @version 1.0
- * @since 2023-12-25
+
  */
 public class Schedule implements Serializable {
 
