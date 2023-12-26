@@ -186,6 +186,11 @@ public class Database implements Serializable {
     public static void addResearchProject(ResearchProject researchProject) {
     	
     }
+	public void updateStudent(Student student) {
+        if (students.containsKey(student.getID())) {
+            students.put(student.getID(), student);
+        }
+    }
 
     /**
      * Adds a message to the system.
