@@ -30,26 +30,11 @@ public class Database implements Serializable {
 	private static Vector<Student> allstudents = new Vector<>();
 	private Vector<GraduateStudent> AllstudentMaster = new Vector<>();
 
-<<<<<<< Updated upstream
 	private static Set<ResearchPaper> researchPapers = new HashSet<>();
 	private Vector<News> news = new Vector<>();
 	private static Vector<String> strategicGoals = new Vector<>();
 	private static Set<ResearchJournal> journals = new HashSet<>();
 	private static Vector<Researcher> researchers = new Vector<>();
-=======
-	private static Vector <Message> Messages;
-    private static Map <Integer, Course> allcourses;   /// id, course
-    private static Vector<Student> allstudents;
-    private Vector <GraduateStudent> AllstudentMaster;
-    ArrayList<User> users;
-//    private List <User> users;
-    private static Set<ResearchPaper> researchPapers;	
-    private Vector<News> news;
-    
-    private static Vector<String> strategicGoals;
-	private static Set<ResearchJournal> journals;
-	private static Vector<Researcher> researchers = new Vector<Researcher>();
->>>>>>> Stashed changes
 
     static Database INSTANCE;
     private static ArrayList<User> users;
@@ -135,8 +120,8 @@ public class Database implements Serializable {
         this.AllstudentMaster = AllstudentMaster;
     }
 
-    public static void addResearchProject(ResearchProject researchProject) {
-    	
+    public static boolean addResearchProject(ResearchProject researchProject) {
+    	return true;
     }
 	public static Set<ResearchPaper> getResearchPapers() {
 		return researchPapers;
