@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fromEmployee.TechSupportSpecialist;
 import manager.News;
 import research.ResearchJournal;
 import research.ResearchPaper;
@@ -24,19 +25,26 @@ public class Database implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6210088069147397395L;
+	private static final long serialVersionUID = -6402617175782597825L;
+	/**
+	 * 
+	 */
+//	private static final long serialVersionUID = 6210088069147397395L; old
 	private static Vector<Message> Messages = new Vector<>();
 	private static Map<Integer, Course> allcourses = new HashMap<>();
 	private static Vector<Student> allstudents = new Vector<>();
 	private Vector<GraduateStudent> AllstudentMaster = new Vector<>();
-
 	private static Set<ResearchPaper> researchPapers = new HashSet<>();
 	private Vector<News> news = new Vector<>();
-	private static Vector<String> strategicGoals = new Vector<>();
-	private static Set<ResearchJournal> journals = new HashSet<>();
-	private static Vector<Researcher> researchers = new Vector<>();
+    private static Vector<String> strategicGoals;
+	private static Set<ResearchJournal> journals;
+	private static Vector<Researcher> researchers = new Vector<Researcher>();
+	private Vector<News> news = new Vector<>();
 
-    static Database INSTANCE;
+	private static ArrayList<TechSupportSpecialist> orders = new ArrayList<>();
+	
+	
+    public static Database INSTANCE;
     private static ArrayList<User> users;
 
     private Database() {
@@ -131,7 +139,13 @@ public class Database implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+	public ArrayList<TechSupportSpecialist> getOrders() {
+		return orders;
+	}
 
+	public static void setOrders(ArrayList<TechSupportSpecialist> orders) {
+		Database.orders = orders;
+	}
 
 	/// Астындагынын бари меники
 	public static Vector<Message> getComplaints() {
@@ -192,6 +206,8 @@ public class Database implements Serializable {
 		return (ResearchPaper) researchPapers.stream()
 						     .filter(n->n.getTitle().equals(choice));
 	}
+
+	
 	
 	
 }

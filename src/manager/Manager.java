@@ -3,6 +3,7 @@ package manager;
 import java.util.*;
 
 import fromEmployee.Employee;
+import fromUser.UserType;
 import research.ResearchPaper;
 import student.*;
 import teacher.Teacher;
@@ -20,9 +21,17 @@ import teacher.Teacher;
     	
     	
     	
-        public Manager(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5823056758898745893L;
+		public Manager(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
 				String Password, int PhoneNumber, double salary, Date hireDate) {
 			super(UserType, ID, FirstName, LastName, Email, Password, PhoneNumber, salary, hireDate);
+			// TODO Auto-generated constructor stub
+		}
+/// it needs for Admin class (Nurikkkk
+		public Manager(String email, String password, UserType userType) {
 			// TODO Auto-generated constructor stub
 		}
 
@@ -98,6 +107,21 @@ import teacher.Teacher;
 	    public void run() {
 	    	
 	    }
+		@Override
+		public void sendMessage() {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void sendOrder() {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void displayMenu() {
+			// TODO Auto-generated method stub
+			
+		}
 
     
 }

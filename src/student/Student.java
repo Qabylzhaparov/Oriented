@@ -1,6 +1,7 @@
 package student;
 
 import java.util.Date;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,17 @@ import teacher.*;
 
 public class Student extends User {
 
-    public Student(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7598735898218537507L;
+
+	/**
+	 * 
+	 */
+//	private static final long serialVersionUID = 414135957949168179L;
+// Это старый UID 
+	public Student(fromUser.UserType UserType, String ID, String FirstName, String LastName, String Email,
 			String Password, int PhoneNumber) {
 		super(UserType, ID, FirstName, LastName, Email, Password, PhoneNumber);
 		// TODO Auto-generated constructor stub
@@ -213,6 +224,18 @@ public class Student extends User {
     void writeComments(String comments) {
         System.out.println("Comments added: " + comments);
     }
+
+	@Override
+	public void run() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayMenu() {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }

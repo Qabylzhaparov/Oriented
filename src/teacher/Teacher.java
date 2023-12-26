@@ -13,11 +13,16 @@ public class Teacher extends Employee {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1014100442159559502L;
+
+	/**
+	 * 
+	 */
+//	private static final long serialVersionUID = 1L; old
 
 	Scanner in = new Scanner(System.in);
-
-	public Teacher() {
+/// It needs for admin ( NUrikkkkk
+	public Teacher(String email, String password, UserType userType) {
 		super();
 	}
 	
@@ -209,4 +214,16 @@ public class Teacher extends Employee {
     		save();
     	}
     }
+
+	@Override
+	public void sendMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayMenu() {
+		// TODO Auto-generated method stub
+		
+	}
 }  
