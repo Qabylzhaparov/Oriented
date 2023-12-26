@@ -34,6 +34,10 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
     public User() {
     }
 
+    public User(String name) {
+    	this.firstName = name;
+    }
+    
     public User(String email, String password, UserType userType) {
         this.email = email;
         this.password = password;
