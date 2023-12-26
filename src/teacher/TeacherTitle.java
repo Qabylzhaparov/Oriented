@@ -1,5 +1,11 @@
 package teacher;
 
+/**
+ * Enum representing different titles for teachers.
+ */
 public enum TeacherTitle {
-	TUTOR, LECTOR, SENIOR_LECTOR, PROFESSOR
+    TUTOR,          // Tutor title
+    LECTOR,         // Lector title
+    SENIOR_LECTOR,  // Senior Lector title
+    PROFESSOR       // Professor title
 }
