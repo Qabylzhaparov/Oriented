@@ -17,10 +17,7 @@ public abstract class Employee extends User {
     public Employee() {
     	
     }
-    
-    public Employee(String name) {
-    	super(name);
-    }
+
     
     /**
      * Constructor for creating an Employee during login.

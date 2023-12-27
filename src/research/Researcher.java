@@ -287,7 +287,7 @@ public class Researcher extends User implements UserInterface{
     			                .orElse(null);
 
     			        if (p != null) {
-    			            while (p.runRProject()) {
+    			            while (p.runRProject(null)) {
     			            }
     			        } else {
     			            System.out.println("Not found!");

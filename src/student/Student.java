@@ -1,3 +1,5 @@
+package student;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +9,8 @@ import java.util.stream.Collectors;
 
 import fromUser.Database;
 import fromUser.User;
-import manager.Course;
+import fromUser.UserType;
+
 import manager.SchoolType;
 import teacher.Teacher;
 
@@ -249,7 +252,7 @@ public class Student extends User implements Serializable {
         for (SchoolType type : SchoolType.values()) {
             System.out.println(type);
         }
-        SchoolType selectedSchoolType = SchoolType.valueOf(scanner.nextLine().toUpperCase());
+        SchoolType selectedSchoolType = SchoolType.valueOf(in.nextLine().toUpperCase());
 
         System.out.println("Available courses for " + selectedSchoolType + ":");   //по выбранному типу факультета выходят предназначенные только этому факультету курсы
         List<Course> availableCourses = Database.getInstance().getAllcourses()
@@ -260,7 +263,7 @@ public class Student extends User implements Serializable {
         availableCourses.forEach(course -> System.out.println(course.getCourseId() + ": " + course.getCourseName()));
 
         System.out.println("Enter the ID of the course to register:");
-        int courseId = scanner.nextInt();
+        int courseId = in.nextInt();
         Course selectedCourse = Database.getInstance().getCourseAtID(courseId); //с класса бд (нужно в бд добавить мэпы)
 
         if (selectedCourse != null) {
@@ -298,7 +301,7 @@ public class Student extends User implements Serializable {
         for (Course course : courses) {
             System.out.println(course.getCourseId() + ": " + course.getCourseName());
         }
-        int courseId = scanner.nextInt();
+        int courseId = in.nextInt();
         Course selectedCourse = courses.stream()
             .filter(course -> course.getCourseId() == courseId)
             .findFirst()
@@ -306,7 +309,7 @@ public class Student extends User implements Serializable {
         
         if (selectedCourse != null) {
             selectedCourse.getInstructors().forEach(teacher -> 
-                System.out.println("Teacher for " + selectedCourse.getCourseName() + ": " + teacher.getName()));
+                System.out.println("Teacher for " + selectedCourse.getCourseName() + ": " + teacher.getFirstName()));
         } else {
             System.out.println("Course not found.");
         }
@@ -465,4 +468,4 @@ public class Student extends User implements Serializable {
 }
 
  
-}
+
