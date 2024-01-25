@@ -11,7 +11,9 @@ import research.Researcher;
 import student.Student;
 import teacher.Teacher;
 
-
+/**
+ * this class controls the system. Adds, removes and updates users
+ * */
 public class Admin extends User {
 /**
 	 * 
@@ -19,7 +21,17 @@ public class Admin extends User {
 	private static final long serialVersionUID = -6314193802692272885L;
 	//	private static final long serialVersionUID = -5092781539768232544L; old
     private transient Scanner in;
-
+    /**
+     * Constructor for the Admin class.
+     *
+     * @param userType     The type of user (ADMIN).
+     * @param ID           The unique identifier for the user.
+     * @param firstName    The first name of the user.
+     * @param lastName     The last name of the user.
+     * @param email        The email of the user.
+     * @param password     The password of the user.
+     * @param phoneNumber  The phone number of the user.
+     */
     public Admin(UserType userType, String ID, String firstName, String lastName, String email, String password,
                  int phoneNumber) {
         super(userType, ID, firstName, lastName, email, password, phoneNumber);
@@ -27,20 +39,35 @@ public class Admin extends User {
 
     public Admin() {
     }
-
+    /**
+     * Constructor for creating an Admin in login.
+     *
+     * @param email     The email of the user.
+     * @param password  The password of the user.
+     * @param userType  The type of user (ADMIN).
+     */
     public Admin(String email, String password, UserType userType) {
         this.email = email;
         this.password = password;
         this.userType = userType;
     }
-    
+    /**
+     * Initializes the scanner for user input.
+     */
     private void initScanner() {
         this.in = new Scanner(System.in);
     }
-
+    /**
+     * Saves the changes made by the Admin to the database.
+     *
+     * @throws IOException 
+     */
 	private void save() throws IOException {
 		Database.write();
 	}
+	 /**
+     * Exits the system and also saves the changes.
+     */
 	private void exit() {
 		System.out.println("Bye bye");
 		try {
@@ -49,6 +76,9 @@ public class Admin extends User {
 			e.printStackTrace();
 		}
 	}
+	/**
+     * Adds a new user to the system.
+     */
     public void addUser() {
         System.out.println("Enter new user's email: ");
         String email = in.next();
@@ -100,7 +130,9 @@ public class Admin extends User {
         }
     }
 
-   
+    /**
+     * Removes a user from the system.
+     */
     public void removeUser() {
         System.out.println("Enter user's email you want to delete: ");
         String emailToRemove = in.next();
@@ -120,7 +152,9 @@ public class Admin extends User {
         }
     }
 
-
+    /**
+     * Updates the information of an existing user.
+     */
     public void updateUser() {
         System.out.println("Enter user's email you want to update: ");
         String emailToUpdate = in.next();
@@ -140,7 +174,6 @@ public class Admin extends User {
             System.out.println("Enter new password: ");
             String newPassword = in.next();
 
-            // Update the fields of the existing user
             existingUser.setEmail(newEmail);
             existingUser.setPassword(newPassword);
 			Database.write();
@@ -151,6 +184,9 @@ public class Admin extends User {
             System.out.println("User not found.");
         }
     }
+    /**
+     * Displays the list of users in the system.
+     */
     public void userList() {
         List<User> userList = Database.INSTANCE.getUserList();
 
@@ -163,6 +199,9 @@ public class Admin extends User {
             }
         }
     }
+    /**
+     * Displays the menu options for the Admin user.
+     */
     public void displayMenu() {
 		System.out.println("--------Admin's menu----------------");
 		System.out.println("====================================");
@@ -174,6 +213,11 @@ public class Admin extends User {
 		System.out.println("*	6) Exit                    *");
 		System.out.println("====================================");
     }
+    /**
+     * Runs the Admin user's menu and actions.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
 	public void run() throws IOException {
 		try {
 			initScanner();
@@ -241,7 +285,6 @@ public class Admin extends User {
 			}
 		finally {
 			if(in != null) in.close();
-	        // Close the Scanner
 	      
 	    }
 	}

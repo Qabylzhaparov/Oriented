@@ -15,6 +15,7 @@ import research.*;
 import student.Student;
 import teacher.Teacher;
 
+//The User class serves as the base class for all users in the KBTU system.
 public abstract class User implements Comparable<User>, Cloneable, UserInterface, Serializable {
 /**
 	 * 
@@ -33,17 +34,29 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
 
     public User() {
     }
-    
-    public User(String name) {
-    	this.firstName = name;
-    }
-
+    /**
+     * Constructor for the login to the system.
+     *
+     * @param email    The user's email.
+     * @param password The user's password.
+     * @param userType The user's type (Admin, Researcher, Manager, etc.).
+     */
     public User(String email, String password, UserType userType) {
         this.email = email;
         this.password = password;
         this.userType = userType;
     }
-
+    /**
+     * Detailed constructor with user information.
+     *
+     * @param userType     The user's type.
+     * @param ID           The user's ID.
+     * @param firstName    The user's first name.
+     * @param lastName     The user's last name.
+     * @param email        The user's email.
+     * @param password     The user's password.
+     * @param phoneNumber  The user's phone number.
+     */
     public User(UserType userType, String ID, String firstName, String lastName, String email, String password,
                 int phoneNumber) {
         this.userType = userType;
@@ -98,10 +111,17 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
         this.phoneNumber = PhoneNumber;
     }
     
-    
+    /**
+     * Saves the user data to the database. 
+     *
+     * @throws IOException 
+     */
     private void save() throws IOException {
 		Database.write();
 	}
+    /**
+     * Exits the system and prints a farewell message. 
+     */
 	private void exit() {
 		System.out.println("Bye bye");
 		try {
@@ -110,6 +130,13 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
 			e.printStackTrace();
 		}
 	}
+	/**
+     * Login method prompts the user to enter their email and password for login.
+     * Returns the logged-in user instance.
+     *
+     * @return The logged-in User instance.
+     * @throws IOException.
+     */
 	public static User login() throws IOException {
 	    System.out.println("Enter your Email: ");
 	    String enteredEmail = in.next();
@@ -155,16 +182,26 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
 	    System.out.println("Incorrect email or password. Try again!!!.");
 	    return login();
 	}
+	/**
+     * Abstract method representing the main functionality of a user. 
+     * Subclasses will implement it.
+     *
+     * @throws IOException .
+     */
 	public abstract void run() throws IOException;
+	
+	/**
+     * Abstract method for displaying the menu specific to each type of user. 
+     */
     public abstract void displayMenu();
 
 
-    
-    ///public viewNews()
-
+/** 
+ *  for write comments to news
+ * */
     public void commentNews(News news, String comment) {
-         news.addComment(comment);                                  /// navernoe news.addComment(String comment)
-    }                                                                       /// a ne return comment
+         news.addComment(comment);                                  
+    }                                                           
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -178,7 +215,7 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
     }
     @Override
     public String toString() {
-        // Placeholder logic for generating a string representation of the user
+
         return "User{" +
                 "userType=" + userType +
                 ", ID='" + ID + '\'' +
@@ -190,39 +227,26 @@ public abstract class User implements Comparable<User>, Cloneable, UserInterface
                 '}';
     }
  
-
-
-//    
-//    public boolean equals(Object obj) {
-//        if (this == obj) return true;
-//        if (obj == null || getClass() != obj.getClass()) return false;
-//        User user = (User) obj;
-//        return PhoneNumber == user.PhoneNumber &&
-//                Objects.equals(ID, user.ID) &&
-//                Objects.equals(FirstName, user.FirstName) &&
-//                Objects.equals(LastName, user.LastName) &&
-//                Objects.equals(Email, user.Email) &&
-//                Objects.equals(Password, user.Password);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(ID, FirstName, LastName, Email, Password, PhoneNumber);
-//    }
-
+    /**
+     * Compares this user with another user based on their ID.
+     *
+     * @param otherUser The user to compare with.
+     */
     @Override
     public int compareTo(User otherUser) {
-        // Compare users based on their ID (you can customize this based on your requirements)
         return this.ID.compareTo(otherUser.ID);
     }
 
+    /**
+     * Clones the current user. 
+     *
+     * @return A clone of the current user.
+     */
     @Override
     public User clone() throws CloneNotSupportedException {
         try {
-            // Perform a shallow copy by invoking the Object.clone() method
             return (User) super.clone();
         } catch (CloneNotSupportedException e) {
-            // This should not happen since User implements Cloneable
             throw new InternalError(e);
         }
     }
