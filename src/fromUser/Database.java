@@ -34,20 +34,11 @@ public class Database implements Serializable {
 
 	//	private static final long serialVersionUID = 6210088069147397395L; old
 	
-	   static Vector<Researcher> researchers = new Vector<Researcher>();
-	    static Set<ResearchProject> projects = new HashSet<ResearchProject>();
-	    static Vector<ResearchPaper> papers = new Vector<ResearchPaper>();
-	    static Set<ResearchJournal> journals = new HashSet<ResearchJournal>();
-
-	
 	private static Vector<Message> Messages = new Vector<>();
 	private static Map<Integer, Course> allcourses = new HashMap<>();
 	private static Vector<Student> allstudents = new Vector<>();
 	private Vector<GraduateStudent> AllstudentMaster = new Vector<>();
-	private static Set<ResearchPaper> researchPapers = new HashSet<>();
     private static Vector<String> strategicGoals;
-
-    
     private List<Course> courses = new ArrayList<>();
     private List<Teacher> teachers = new ArrayList<>();
     private List<Student> students = new ArrayList<>();

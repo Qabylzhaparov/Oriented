@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"research","l":"FormatType"},{"p":"research","l":"ResearchDatabase"},{"p":"research","l":"Researcher"},{"p":"research","l":"ResearchJournal"},{"p":"research","l":"ResearchPaper"},{"p":"research","l":"ResearchProject"},{"p":"research","l":"Tester"}];updateSearchResults();

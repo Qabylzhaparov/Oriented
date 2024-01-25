@@ -8,13 +8,13 @@ import research.Researcher;
 
  
     
-    enum Category {
-        RESEARCH, STUDY;
-
-        public static Category get(int ordinal) {
-            return Category.values()[ordinal];
-        }
-    }
+//    enum Category {
+//        RESEARCH, STUDY;
+//
+//        public static Category get(int ordinal) {
+//            return Category.values()[ordinal];
+//        }
+//    }
 
     public class News {
     	private int id;
@@ -38,21 +38,21 @@ import research.Researcher;
             return id;
         }
     
-    public static void viewNews(Vector<News> newsList) {
-        
-        Stream<News> researchNewsStream = newsList.stream()
-                                                  .filter(news -> news.category == Category.RESEARCH);
-        Stream<News> otherNewsStream = newsList.stream()
-                                               .filter(news -> news.category != Category.RESEARCH);
-
-        List<News> sortedNews = Stream.concat(researchNewsStream, otherNewsStream)
-                                      .collect(Collectors.toList());
-
-        
-        for (News news : sortedNews) {
-            System.out.println(news.headline + " - " + news.topic + " [" + news.category + "]");
-        }
-    }
+//    public static void viewNews(Vector<News> newsList) {
+//        
+//        Stream<News> researchNewsStream = newsList.stream()
+//                                                  .filter(news -> news.category == Category.RESEARCH);
+//        Stream<News> otherNewsStream = newsList.stream()
+//                                               .filter(news -> news.category != Category.RESEARCH);
+//
+//        List<News> sortedNews = Stream.concat(researchNewsStream, otherNewsStream)
+//                                      .collect(Collectors.toList());
+//
+//        
+//        for (News news : sortedNews) {
+//            System.out.println(news.headline + " - " + news.topic + " [" + news.category + "]");
+//        }
+//    }
 
     
     

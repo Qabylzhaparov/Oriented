@@ -12,7 +12,7 @@ public class Message {
     private User Author;
     private int receiverid;
     private MessageType Category;
-    private StatusType Status;
+//    private StatusType Status;
     private UrgencyLevel UrgencyLevel;
 
     {
@@ -25,16 +25,16 @@ public class Message {
     }
 
     // Constructor with parameters
-    public Message(String text, User author, int receiverid, MessageType category,
-                   StatusType status, UrgencyLevel urgencyLevel) {
-        this.DateOfSend = new Date();
-        this.Text = text;
-        this.Author = author;
-        this.receiverid = receiverid;
-        this.Category = category;
-        this.Status = status;
-        this.UrgencyLevel = urgencyLevel;
-    }
+//    public Message(String text, User author, int receiverid, MessageType category,
+//                   StatusType status, UrgencyLevel urgencyLevel) {
+//        this.DateOfSend = new Date();
+//        this.Text = text;
+//        this.Author = author;
+//        this.receiverid = receiverid;
+//        this.Category = category;
+//        this.Status = status;
+//        this.UrgencyLevel = urgencyLevel;
+//    }
 
     // Getters and setters
     public Integer getID() {
